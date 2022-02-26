@@ -1,4 +1,6 @@
 {
+    "/craft-tablecloth.js": "/craft-tablecloth.js",
+    "/craft-tablecloth-cp.js": "/craft-tablecloth-cp.js",
     "/craft-tablecloth.min.js": "/craft-tablecloth.min.js",
     "/craft-tablecloth-cp.min.js": "/craft-tablecloth-cp.min.js"
 }
