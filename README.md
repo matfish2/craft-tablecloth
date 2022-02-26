@@ -13,7 +13,7 @@ The table can then be rendered anywhere in the page with a simple twig function.
 
 ## Documentation
 
-The full documentation can be found [here](https://app.gitbook.com/s/5WvLo2Spn8DSKZ2gwbx1/).
+The full documentation can be found [here](https://matanya.gitbook.io/craft-tablecloth/).
 
 
 ## License
