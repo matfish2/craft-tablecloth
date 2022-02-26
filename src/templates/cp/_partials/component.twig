@@ -1,0 +1,7 @@
+<tr>
+    <td>
+        <input type="checkbox" name="components[]"
+               value="{{ value }}" {{ value in model.getTableOption('components') ? 'checked' : '' }}>
+    </td>
+    <td>{{ label }}</td>
+</tr>

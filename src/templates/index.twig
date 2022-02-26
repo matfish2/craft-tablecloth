@@ -1,0 +1,14 @@
+{% extends '_layouts/elementindex' %}
+{% set title = "Tables"|t('tablecloth')  %}
+{% set elementType = 'matfish\\Tablecloth\\elements\\DataTable' %}
+{% set canHaveDrafts = true %}
+{% set showSiteMenu = true %}
+{% block actionButton %}
+ <div id="extra-headers">
+    <div class="buttons right">
+      <a href="{{ url('tablecloth/tables/new') }}" class="btn submit add icon">
+       {{ "New Table"|t('tablecloth')}}
+      </a>
+    </div>
+  </div>
+{% endblock %}

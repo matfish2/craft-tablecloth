@@ -1,0 +1,28 @@
+{% block pagination %}
+<div class="py-4 ma">
+    <div class="flex items-center">
+        <button type="button" class="flex items-center px-3 border border-gray-400 py-1 text-gray-500 bg-white rounded-l-md hover:bg-blue-400 hover:text-white"
+        @click="prevPage"
+                :disabled="currentPage===1"
+        >
+            <
+        </button>
+
+        <template x-for="page in renderablePages" :key="page">
+            <button type="button"
+                    class="ma-0 px-3 py-1 text-gray-700 bg-white hover:bg-blue-400 hover:text-white border-t border-r border-b border-gray-400"
+                    :class="currentPage===page ? 'bg-blue-400 text-white':''"
+                    @click="setPage(page)"
+                    x-text="page">
+            </button>
+        </template>
+        <button
+                class="px-3 py-1 text-gray-500 bg-white border rounded-r-md border-gray-400 hover:bg-blue-400 hover:text-white"
+                @click="nextPage"
+                :disabled="currentPage===pages"
+        >
+          >
+        </button>
+    </div>
+</div>
+{% endblock %}

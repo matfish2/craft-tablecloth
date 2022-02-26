@@ -1,0 +1,10 @@
+<div class="mr-3">
+     <template x-if="pages>1">
+          <span>
+                {{ "Page {current} of {total} pages" | t('tablecloth', params = {
+                    current:"<span x-text='currentPage'></span>",
+                    total: "<span x-text='pages'></span>"
+                }) | raw }}
+          </span>
+        </template>
+</div>

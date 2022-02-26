@@ -1,0 +1,11 @@
+1. Select Postgres or MySQL. Copy .env.example.{driver} to .env as a template
+2. Comment in Setup migration in codeception.yml
+3. comment out craftcms\cms\src\services\Sites.php:1151 (isInstalled check) ?
+4. Change:  dbSetup: { clean: true, setupCraft: true }
+5. codecept run unit
+6. Revert 2 and 4
+7. Install feedme and tablecloth on root project
+8. Copy SQL from tablecloth_feed_sql.txt and run
+9. Go to feed me and run all feeds (Entries first, then the rest)
+10. Run Unit tests: codecept run unit
+

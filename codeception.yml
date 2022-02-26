@@ -1,0 +1,35 @@
+actor: Tester
+paths:
+  tests: tests
+  log: tests/_output
+  data: tests/_data
+  support: tests/_support
+  envs: tests/_envs
+bootstrap: _bootstrap.php
+params:
+  - tests/.env
+modules:
+  config:
+    \craft\test\Craft:
+      configFile: "tests/_craft/config/test.php"
+      entryUrl: "https://blogify-dev.test/index.php"
+      projectConfig: { }
+#      migrations: [
+#        {
+#          class: 'tableclothtests\_craft\migrations\Setup',
+#          params: [ ]
+#        },
+#      ]
+      plugins: [
+        {
+          class: Tablecloth,
+          handle: tablecloth
+        },
+#        {
+#          class: craft\commerce\Plugin,
+#          handle: commerce
+#        }
+      ]
+      cleanup: true,
+      transaction: true
+      dbSetup: { clean: false, setupCraft: false }

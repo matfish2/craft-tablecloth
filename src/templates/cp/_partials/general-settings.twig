@@ -1,0 +1,13 @@
+{% import "_includes/forms" as forms %}
+
+{{ forms.lightswitchField({
+    label: 'Override General Settings?'|t('datatable'),
+    instructions:'Use this to override the default settings from the plugin\'s Settings page',
+    name:'overrideGeneralSettings',
+    on: datatable.overrideGeneralSettings ? true : false,
+    inputAttributes:{ '@click':'toggleGeneralSettings($event)'}
+}) }}
+
+<div v-if="overrideGeneralSettings">
+    {% include 'tablecloth/cp/_partials/settings' with {model:datatable} %}
+</div>

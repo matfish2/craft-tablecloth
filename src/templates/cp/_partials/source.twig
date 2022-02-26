@@ -1,0 +1,190 @@
+{% import '_includes/forms' as forms %}
+
+{{ actionInput('tablecloth/tables/save') }}
+
+{{ redirectInput('tablecloth') }}
+
+{{ forms.textField({
+    label: 'Name'|t('app'),
+    id: 'name',
+    name: 'name',
+    value: datatable.getParam('name'),
+    required: true,
+    errors: datatable.getErrors('name'),
+    inputAttributes:{
+        'v-model':'name'
+    }
+}) }}
+
+{{ forms.textField({
+    label: 'Handle'|t('app'),
+    id: 'handle',
+    name: 'handle',
+    value: datatable.getParam('handle'),
+    required: true,
+    errors: datatable.getErrors('handle'),
+    inputAttributes:{
+        'v-model':'tableHandle'
+    }
+}) }}
+
+{{ forms.selectField({
+    label: 'Data Source'|t('tablecloth'),
+    id: 'source',
+    name: 'source',
+    value: datatable.getParam('source'),
+    options:sources,
+    required: true,
+    errors: datatable.getErrors('source'),
+    inputAttributes:{
+        'v-model':'source',
+        ':disabled':datatable.id ? 'true':'false'
+    }
+}) }}
+
+<div id="dt-section">
+    <div v-if="source==='craft\\elements\\Entry'">
+        {{ forms.selectField({
+            label: 'Section'|t('app'),
+            id: 'sectionId',
+            name: 'sectionId',
+            value: datatable.getParam('sectionId'),
+            options:sections,
+            required: false,
+            errors: datatable.getErrors('sectionId'),
+            inputAttributes:{
+                ':disabled':datatable.id ? 'true':'false',
+                'v-model':'sectionId'
+            }
+        }) }}
+    </div>
+
+    <div id="typeId-field" class="field"
+         v-if="source==='craft\\elements\\Entry' || source==='craft\\commerce\\elements\\Product'">
+        <div class="heading">
+            <label id="typeId-label" for="typeId">${ sourceName } Type<span class="visually-hidden">Required</span>
+                <span aria-hidden="true" class="required"></span></label>
+        </div>
+        <div class="input ltr">
+            <div class="select">
+                <select id="typeId" v-model="typeId" name="typeId" :disabled="!isNew">
+                    <option v-for="option in types" :value="option.value">${option.label}</option>
+                </select>
+            </div>
+            {%- if datatable.getErrors('typeId') %}
+                <ul class="errors">
+                    <li>{{ datatable.getErrors('typeId')[0] }}</li>
+                </ul>
+            {%- endif %}
+
+        </div>
+    </div>
+</div>
+
+<div id="dt-catgroup" v-if="source==='craft\\elements\\Category'">
+    {{ forms.selectField({
+        label: 'Category Group'|t('app'),
+        id: 'groupId',
+        name: 'groupId',
+        value: datatable.getParam('groupId'),
+        options:categoryGroups,
+        required: true,
+        errors: datatable.getErrors('groupId'),
+        inputAttributes:{
+            ':disabled':datatable.id ? 'true':'false',
+        }
+    }) }}
+</div>
+
+<div id="dt-catgroup" v-if="source==='craft\\elements\\Tag'">
+    {{ forms.selectField({
+        label: 'Tag Group'|t('app'),
+        id: 'groupId',
+        name: 'groupId',
+        value: datatable.getParam('groupId'),
+        options:tagGroups,
+        required: true,
+        errors: datatable.getErrors('groupId'),
+        inputAttributes:{
+            ':disabled':datatable.id ? 'true':'false',
+        }
+    }) }}
+</div>
+
+<div id="dt-assetvolume" v-if="source==='craft\\elements\\Asset'">
+    {{ forms.selectField({
+        label: 'Asset Volume'|t('app'),
+        id: 'volumeId',
+        name: 'volumeId',
+        value: datatable.getParam('volumeId'),
+        options:assetVolumes,
+        required: true,
+        errors: datatable.getErrors('volumeId'),
+        inputAttributes:{
+            ':disabled':datatable.id ? 'true':'false',
+        }
+    }) }}
+</div>
+
+<div id="dt-assetvolume" v-show="source==='craft\\elements\\User'">
+    {{ forms.lightswitchField({
+        label: 'All Users?'|t('datatable'),
+        instructions:'Uncheck this to select user group(s)',
+        name:'allUsers',
+        on:(datatable.getUserGroups() | length) is same as (0),
+        inputAttributes:{
+            'v-model':'allUsers',
+        }
+    }) }}
+    <div v-show="!allUsers">
+    {{ forms.checkboxGroupField({
+        label: 'User Group(s)'|t('app'),
+        id: 'userGroups',
+        name: 'userGroups',
+        values: datatable.getUserGroups(),
+        options:userGroups,
+        required: true,
+        errors: datatable.getErrors('userGroups'),
+    }) }}
+    </div>
+
+</div>
+
+<div id="dt-productvariants" v-if="source==='craft\\commerce\\elements\\Product' && selectedType.hasVariants">
+    <br>
+    {{ forms.radioGroupField({
+        label: 'Variants Strategy'|t('app'),
+        id: 'variantsStrategy',
+        name: 'variantsStrategy',
+        value: datatable.getParam('variantsStrategy'),
+        options:[
+            {
+                value:'nest',
+                label:'Nest Under Each Product: Each product has one row'
+            },
+            {
+                value:'join',
+                label:'Join to Products: Each variant has one row'
+            }],
+        required: true,
+        errors: datatable.getErrors('variantsStrategy'),
+    }) }}
+</div>
+
+
+{{ forms.lightswitchField({
+    label: 'Server Table?'|t('datatable'),
+    instructions:'Check this if you have a large dataset that cannot be loaded in its entirety to the front-end. You can change this at any time',
+    name:'serverTable',
+    on:datatable.getParam('serverTable')
+}) }}
+
+{% if (datatable.id) %}
+    <input type="hidden" name="tableId" value="{{ datatable.id }}">
+{% endif %}
+
+<div class="buttons" v-if="isNew">
+    <button type="submit" class="btn submit">
+        {{ "Save and Continue"|t('tablecloth') }}
+    </button>
+</div>

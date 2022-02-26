@@ -1,0 +1,18 @@
+{% block count %}
+    <p>
+        <template x-if="recordsCount>1">
+          <span>
+                {{ "Showing {start} - {end} of {entries} entries" | t('tablecloth', params = {
+                    entries:'<span x-text="recordsCount"></span>',
+                    start:'<span x-text="currentPageRange.start"></span>',
+                    end:'<span x-text="currentPageRange.end"></span>'
+                }) | raw }}
+          </span>
+        </template>
+        <template x-if="recordsCount===1">
+          <span>
+               {{ "One entry" | t('tablecloth') }}
+          </span>
+        </template>
+    </p>
+{% endblock %}

@@ -1,0 +1,71 @@
+{% import '_includes/forms' as forms %}
+<div v-if="isNew">
+    Please fill in the "Basics" tab and save the table first to add columns
+</div>
+<div v-else>
+    <div class="buttons">
+        <button type="button" @click="addColumn" class="btn submit add icon">
+            {{ "Add Column"|t('tablecloth') }}
+        </button>
+    </div>
+    <div class="matrix matrix-field" id="fields-matrixTest" style="position: relative;">
+        <div class="blocks" id="dt-columns">
+            <template v-if="!reordering">
+                <div v-for="(column,i) in columns" :key="i" class="matrixblock" :data-id="`column_${i}`"
+                     data-type="columns"
+                     style="opacity: 1;">
+                    <div class="titlebar" style="padding-left:15px;">
+                        <div class="blocktype">
+                            <button type="button" class="btn btn-small" title="Toggle"
+                                    @click="column.visible = !column.visible"
+                                    tabindex="0"
+                                    aria-expanded="false">${column.visible ? '-' : '+'}
+                            </button>
+                            ${ column.handle ? fieldsMap[column.handle] : 'Column' }
+                        </div>
+                        <div class="actions pull-right">
+                            <button type="button"
+                                    class="btn icon delete"
+                                    title="Delete Column"
+                                    @click="deleteColumn(i)"
+                            ></button>
+                        </div>
+                    </div>
+                    <div class="fields" v-show="column.visible">
+                        <input type="hidden" :name="`columns[${i}][handle]`" v-model="column.handle">
+                        <input type="hidden" :name="`columns[${i}][heading]`" v-model="column.heading">
+                        <input type="hidden" :name="`columns[${i}][filterable]`" v-model="column.filterable">
+                        <input type="hidden" :name="`columns[${i}][sortable]`" v-model="column.sortable">
+                        <input type="hidden" :name="`columns[${i}][hidden]`" v-model="column.hidden">
+
+                        <div class="flex-fields">
+                            {{ forms.selectField({
+                                label: 'Field'|t('datatable'),
+                                options:[{label:'Select Field',value:''}]|merge(normalFields),
+                                required: true,
+                                inputAttributes:{
+                                    'v-model':'columns[i].handle',
+                                    '@change':'updateHeading(i)'
+                                }
+                            }) }}
+
+                            {{ forms.textField({
+                                label: 'Heading'|t('datatable'),
+                                required: true,
+                                inputAttributes:{
+                                    'v-model':'columns[i].heading',
+                                }
+                            }) }}
+
+                            {% include 'tablecloth/cp/_partials/checkbox' with {option: 'filterable'} %}
+                            {% include 'tablecloth/cp/_partials/checkbox' with {option: 'sortable'} %}
+                            {% include 'tablecloth/cp/_partials/checkbox' with {option: 'hidden'} %}
+
+                            <p></p>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </div>
+</div>

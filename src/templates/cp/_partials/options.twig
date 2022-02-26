@@ -1,0 +1,59 @@
+{% import '_includes/forms' as forms %}
+
+{{ forms.selectField({
+    instructions:'Template to be used for table',
+    value: datatable.getParam('preset'),
+    name:'preset',
+    label:'Preset',
+    options: presets,
+}) }}
+
+<p>
+    <label for="initialSortColumn"><b>{{ 'Initial Sort'|t('tablecloth') }}</b>
+        <br>Initial sort by <i>one of the columns selected under "Columns"</i>.<br>
+        If you wish to sort by a column without displaying its content mark it as hidden
+    </label>
+</p>
+{{ forms.select({
+    value: datatable.getParam('initialSortColumn'),
+    name:'initialSortColumn',
+    options: normalFields,
+    required: true
+}) }}
+
+{{ forms.select({
+    value: datatable.getParam('initialSortAsc') ? '1' : '0',
+    name:'initialSortAsc',
+    options:[
+        {label:'Ascending',value:'1'},
+        {label:'Descending',value:'0'},
+    ],
+    required: true
+}) }}
+
+{{ forms.lightswitchField({
+    label: 'Enable Child Rows?'|t('tablecloth'),
+    instructions:'Child Rows allow you to display additional content on a toggleable additional row',
+    name:'enableChildRows',
+    on: datatable.getParam('enableChildRows') ? true : false,
+    inputAttributes:{ '@click':'toggleChildRowTemplate($event)'}
+}) }}
+
+<div v-if="enableChildRows">
+    {{ forms.checkboxGroupField({
+        label: 'Child Row Table Fields'|t('tablecloth'),
+        values:datatable.childRowTableFields,
+        instructions:'Table fields to render on child row',
+        name:'childRowTableFields',
+        options:tableFields,
+    }) }}
+
+    {{ forms.checkboxGroupField({
+        label: 'Child Row Matrix Fields'|t('tablecloth'),
+        values:datatable.childRowMatrixFields,
+        instructions:'Matrix fields to render on child row',
+        name:'childRowMatrixFields',
+        options:matrixFields,
+    }) }}
+</div>
+

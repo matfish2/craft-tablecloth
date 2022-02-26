@@ -1,0 +1,35 @@
+<thead>
+{% block headings %}
+    <tr class="text-left">
+        {% if options.enableChildRows %}
+            <th class="py-2 px-3 sticky top-0 border-b border-gray-200 bg-gray-100">
+            </th>
+        {% endif %}
+        {% if 'selectableRows' in options.components %}
+            <th class="py-2 px-3 sticky top-0 border-b border-gray-200 bg-gray-100">
+                <label
+                        class="text-teal-500 inline-flex justify-between items-center hover:bg-gray-200 px-2 py-2 rounded-lg cursor-pointer">
+                    <input type="checkbox" class="form-checkbox focus:outline-none focus:shadow-outline"
+                           @click="selectAllCheckbox($event);">
+                </label>
+            </th>
+        {% endif %}
+        <template x-for="column in renderableColumns" :key="column.handle">
+            <th class="bg-gray-100 sticky top-0 border-b border-gray-200 px-6 py-2 text-gray-600 font-bold tracking-wider uppercase text-xs"
+                :x-ref="column.handle"
+                :class="{ [column.handle]: true }"
+                @click="sortByColumn(column.handle)"
+            >
+                <div class="flex justify-between">
+                    <span x-text="column.heading"></span>
+                    <template x-if="column.sortable">
+                        <p class="pointer-cursor">
+                            <img :src="`{{ svgPath }}/sort${sortSuffix(column.handle)}.svg`" width="20" alt="Sortable">
+                        </p>
+                    </template>
+                </div>
+            </th>
+        </template>
+    </tr>
+{% endblock %}
+</thead>

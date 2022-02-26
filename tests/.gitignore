@@ -1,0 +1,6 @@
+.env
+.env.postgres
+.env.mysql
+_output
+_support
+_data

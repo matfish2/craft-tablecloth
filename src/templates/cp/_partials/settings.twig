@@ -1,0 +1,96 @@
+{% import "_includes/forms" as forms %}
+
+<div id="components-field" class="field">
+    <div class="heading"><label id="components-label" for="components">Components</label>
+    </div>
+    <div id="components-instructions" class="instructions"><p>Toggle table components</p></div>
+    <div class="input ltr">
+        <table class="table">
+            <tbody>
+            {% include 'tablecloth/cp/_partials/component' with {value:'filters',label:'Filters'} %}
+            {% include 'tablecloth/cp/_partials/component' with {value:'columnsDisplay',label:'Columns Display'} %}
+            {% include 'tablecloth/cp/_partials/component' with {value:'pagination',label:'Pagination'} %}
+            {% include 'tablecloth/cp/_partials/component' with {value:'entriesCount',label:'Entries count'} %}
+            {% include 'tablecloth/cp/_partials/component' with {value:'pagesCount',label:'Pages count'} %}
+            {% include 'tablecloth/cp/_partials/component' with {value:'perPage',label:'Records per page'} %}
+            {% include 'tablecloth/cp/_partials/component' with {value:'selectableRows',label:'Selectable rows'} %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{{ forms.textField({
+    value: model.height,
+    type:'number',
+    name:'height',
+    label:'Table Height in Pixels',
+    required: true
+}) }}
+
+
+{{ forms.selectField({
+    options:model.perPageList,
+    label: "(Initial) records per page" | t('tablecloth'),
+    instructions:'This can be changed by user if you enable the Records per page component on the table',
+    name: 'initialPerPage',
+    value: model.getTableOption('initialPerPage')
+}) }}
+
+{{ forms.textField({
+    label: "Per page values",
+    instructions:'Comma separated list. Used when the Records per page component is enabled on the table',
+    name: 'perPageValues',
+    value:model.getTableOption('perPageValues') | join(','),
+    errors:model.getErrors('perPageValues')
+}) }}
+
+{{ forms.textField(
+    {
+        label:"Date Format" | t('tablecloth'),
+        instructions:'Used to display date columns. Must be a valid date-fn format',
+        name:'dateFormat',
+        value: model.getTableOption('dateFormat')
+    }
+) }}
+
+{{ forms.textField(
+    {
+        label:"Datetime Format" | t('tablecloth'),
+        instructions:'Used to display datetime columns. Must be a valid date-fn format',
+        name:'datetimeFormat',
+        value: model.getTableOption('datetimeFormat')
+    }
+) }}
+
+{{ forms.textField(
+    {
+        label:"Time Format" | t('tablecloth'),
+        instructions:'Used to display time columns. Must be a valid date-fn format',
+        name:'timeFormat',
+        value: model.getTableOption('timeFormat')
+    }
+) }}
+
+{{ forms.textField({
+    label: 'Search debounce',
+    type:'number',
+    instructions:'Idle time in milliseconds before a search is triggered on the free-text filter',
+    name:'debounce',
+    value:model.getTableOption('debounce')
+}) }}
+
+{{ forms.textField({
+    label: 'Pagination Chunk',
+    type:'number',
+    instructions:'Max. pages to be displayed in pagination component',
+    name:'paginationChunk',
+    value:model.getTableOption('paginationChunk')
+}) }}
+
+{{ forms.textField({
+    label: 'Thumbnail Width',
+    type:'number',
+    instructions:'Image thumbnail width',
+    name:'thumbnailWidth',
+    value:model.getTableOption('thumbnailWidth')
+}) }}

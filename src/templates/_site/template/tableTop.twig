@@ -1,0 +1,29 @@
+<div class="mb-4 flex justify-between items-center">
+    {% block tableTopLeft %}
+        <div class="flex-1 pr-4">
+            {% block filter %}
+                {% if 'filters' in options.components %}
+                    {% include datatable.componentPath('search') %}
+                {% endif %}
+            {% endblock %}
+        </div>
+    {% endblock %}
+
+    {% block tableTopRight %}
+        <div>
+            <div class="shadow rounded-lg flex">
+                {% block columnsDisplay %}
+                    {% if 'columnsDisplay' in options.components %}
+                        {% include datatable.componentPath('columns') %}
+                    {% endif %}
+                {% endblock %}
+
+                {% block perPage %}
+                    {% if 'perPage' in options.components %}
+                        {% include datatable.componentPath('perPageDropdown') %}
+                    {% endif %}
+                {% endblock %}
+            </div>
+        </div>
+    {% endblock %}
+</div>

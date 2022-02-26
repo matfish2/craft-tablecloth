@@ -1,0 +1,8 @@
+<template x-if="{{ value }}.length>0">
+    <template x-for="(category,i) in {{ value }}">
+        <span>
+            <a :href="category.data.url" target="_blank" x-text="category.data.title"></a><template x-if="i<{{ value }}.length-1"><span>,</span></template>
+        </span>
+    </template>
+</template>
+

@@ -1,0 +1,49 @@
+{
+    "name": "matfish/craft-tablecloth",
+    "description": "Front-end datatables for your Craft content",
+    "type": "craft-plugin",
+    "keywords": [
+        "datatables"
+    ],
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Mat Fish",
+            "homepage": "https://github.com/matfish2/craft-tablecloth"
+        }
+    ],
+    "support": {
+        "email": "matfish2@gmail.com",
+        "issues": "https://github.com/matfish2/craft-tablecloth/issues?state=open",
+        "source": "https://github.com/matfish2/craft-tablecloth",
+        "docs": "https://github.com/matfish2/craft-tablecloth/blob/master/README.md"
+    },
+    "require": {
+        "craftcms/cms": "^3.7.0",
+        "ext-json": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "matfish\\Tablecloth\\": "src/",
+            "tableclothtests\\": "tests/"
+        },
+        "files": [
+            "src/helpers.php"
+        ]
+    },
+    "extra": {
+        "name": "Tablecloth",
+        "handle": "tablecloth",
+        "changelogUrl": "https://raw.githubusercontent.com/matfish2/craft-tablecloth/master/CHANGELOG.md",
+        "class": "matfish\\Tablecloth\\Tablecloth"
+    },
+    "require-dev": {
+        "codeception/codeception": "^4.1",
+        "codeception/module-phpbrowser": "^1.0.0",
+        "codeception/module-asserts": "^1.0.0",
+        "vlucas/phpdotenv": "^3.0",
+        "codeception/module-yii2": "^1.1",
+        "yiisoft/yii2-shell": "^2.0",
+        "craftcms/commerce": "3.4.9.2"
+    }
+}

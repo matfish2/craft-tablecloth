@@ -1,0 +1,115 @@
+{% do view.registerAssetBundle('matfish\\Tablecloth\\TableclothCpAssetBundle') %}
+{% extends '_layouts/cp' %}
+{% set title = datatable.isNew() ?  ('New Table'|t('tablecloth')) : ('Edit Table'|t('tablecloth')) %}
+{% set fullPageForm = true %}
+
+{% set tabs = datatable.isNew() ? {
+    source: {
+        label: 'Source'|t('tablecloth'),
+        url: '#source',
+    }
+}: {
+    source: {
+        label: 'Source'|t('tablecloth'),
+        url: '#source',
+    },
+    columns: {
+        label: 'Columns'|t('tablecloth'),
+        url: '#columns',
+    },
+    options:{
+        label: 'Options'|t('tablecloth'),
+        url: '#options'
+    },
+    generalSettings:{
+        label: 'General settings'|t('tablecloth'),
+        url: '#general-settings'
+    },
+    advanced:{
+        label:'Advanced',
+        url:'#advanced'
+    }
+} %}
+
+{% block content %}
+    <div id="tablecloth-app" v-cloak>
+        <div id="source">
+            {% include 'tablecloth/cp/_partials/source' %}
+        </div>
+        {% if (not datatable.isNew()) %}
+            <div id="columns">
+                {% include 'tablecloth/cp/_partials/columns' %}
+            </div>
+
+            <div id="options">
+                {% include 'tablecloth/cp/_partials/options' %}
+            </div>
+
+            <div id="general-settings">
+                {% include 'tablecloth/cp/_partials/general-settings' %}
+            </div>
+
+            <div id="advanced">
+                {% include 'tablecloth/cp/_partials/advanced' %}
+            </div>
+        {% endif %}
+    </div>
+
+    <style>
+        #tablecloth-app .matrixblock {
+            padding-bottom: 0;
+        }
+
+        [data-type=columns] .titlebar {
+            cursor: move;
+            padding-right: 10px !important;
+        }
+
+        [v-cloak]:before {
+            content: "Loading...";
+            position: absolute;
+        }
+
+        [v-cloak] {
+            display: none;
+        }
+
+        .handles-list {
+            display: flex;
+            flex-wrap: wrap;
+            max-width: 600px;
+        }
+
+        .handles-list li {
+        }
+        .handles-list button {
+            cursor: pointer;
+            padding:5px;
+            background: #eee;
+            border:1px solid #ddd;
+            margin:5px;
+        }
+    </style>
+    <script>
+        window.Tablecloth = {
+            name: `{{ datatable.getParam('name') }}`,
+            tableHandle: '{{ datatable.getParam('handle') }}',
+            source: '{{ datatable.getParam('source') | replace('\\','\\\\') }}',
+            isNew: {{ datatable.isNew() ? 'true' : 'false' }},
+            {% if not datatable.isNew() %}
+            fieldsMap:{{ fieldsMap | raw }},
+            tableFields:{{ tableFields | json_encode| raw }},
+            matrixFields: {{ matrixFields | json_encode | raw }},
+            {% endif %}
+            userGroups:{{ datatable.getParamAsJson('userGroups') | raw }},
+            columns: {{ datatable.getParamAsJson('columns') | raw }},
+            enableChildRows:{{ datatable.getParam('enableChildRows')  ? 'true' : 'false' }},
+            overrideGeneralSettings: {{ datatable.getParam('overrideGeneralSettings') ? 'true' : 'false' }},
+            datasetPrefilter:"{{ datatable.getParam('datasetPrefilter')}}",
+            sectionId:{{ datatable.sectionId ?? "''" }},
+            typeId:{{ datatable.typeId ?? "''" }},
+            sections:{{ sections | json_encode | raw }},
+            productTypes:{{ productTypes | json_encode | raw }}
+        }
+    </script>
+{% endblock %}

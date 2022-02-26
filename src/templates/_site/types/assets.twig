@@ -1,0 +1,5 @@
+<template x-if="{{ value }}.length>0">
+    <a :href="{{ value }}[0].data.url" target="_blank">
+        <img :src="{{ value }}[0].data.thumbnailUrl" :alt="{{ value }}[0].data.title" width="{{ width }}">
+    </a>
+</template>

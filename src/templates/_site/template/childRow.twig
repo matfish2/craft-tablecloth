@@ -1,0 +1,9 @@
+<template x-if="childRowOpen(row.id)">
+    <tr class="tablecloth__child-row--tr">
+        <td :colspan="colspan">
+            <div class="tablecloth__child-row--wrapper">
+                {% include datatable.childRowPath %}
+            </div>
+        </td>
+    </tr>
+</template>

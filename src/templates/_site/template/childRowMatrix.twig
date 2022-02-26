@@ -1,0 +1,13 @@
+<div class="tablecloth__child-row--matrix">
+    <template x-for="block in row.{{ matrix.handle }}">
+        <div>
+            {% for block in matrix.blocks %}
+                <template x-if="block.handle==='{{ block }}'">
+                    <div class="tablecloth__child-row--block tablecloth__child-row--block--{{ block }}">
+                        {% include matrix.blockPath(block) %}
+                    </div>
+                </template>
+            {% endfor %}
+        </div>
+    </template>
+</div>

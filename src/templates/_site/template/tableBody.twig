@@ -1,0 +1,27 @@
+{% if not options.enableChildRows %}
+<tbody>
+{% endif %}
+<template x-for="row in currentPageData" :key="row.id">
+    {% if options.enableChildRows %}
+    <tbody>
+    {% endif %}
+<tr>
+    {% if options.enableChildRows %}
+        {% include datatable.componentPath('childRowToggler') %}
+    {% endif %}
+    {% if 'selectableRows' in options.components %}
+        {% include datatable.componentPath('rowSelectCheckbox') %}
+    {% endif %}
+    {% include datatable.componentPath('tableCells') %}
+</tr>
+{% if options.enableChildRows %}
+{% include datatable.componentPath('childRow') with {tableHandle:datatable.handle} %}
+</tbody>
+{% endif %}
+</template>
+<template x-if="recordsCount===0">
+{% include datatable.componentPath('notFound') %}
+</template>
+{% if not options.enableChildRows %}
+    </tbody>
+{% endif %}

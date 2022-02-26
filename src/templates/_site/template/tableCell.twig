@@ -1,0 +1,15 @@
+<div class="text-gray-700 px-6 py-3 flex items-center">
+    <template x-if="!column.templatePath">
+        <div x-html="getCellValue(row, column)">
+        </div>
+    </template>
+
+    {% for column in datatable.fieldsTemplates %}
+        <template x-if="column.handle==='{{ column.frontEndHandle }}'">
+            <div>
+                {{ column.renderTemplate() | raw }}
+            </div>
+        </template>
+    {% endfor %}
+
+</div>

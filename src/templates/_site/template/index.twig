@@ -1,0 +1,59 @@
+{% set options = datatable.tableOptions %}
+{% block tablewrap %}
+<div class="container mx-auto py-6 px-4 tablecloth-wrapper tablecloth__{{ datatable.handle }}"
+     x-data="tablecloth('{{ datatable.handle }}')"
+     x-cloak>
+    <template x-if="!loading">
+        {% block table %}
+        <div>
+            {% include datatable.componentPath('tableTop') %}
+            <div class="overflow-x-auto bg-white rounded-lg shadow overflow-y-auto overflow-x-hidden relative"
+                 style="height: {{ datatable.getTableOption('height') }}px;">
+                {% include datatable.componentPath('table') %}
+            </div>
+            <div class="flex justify-between items-center flex-col-reverse md:flex-row">
+                {% block count %}
+                    <div class=>
+                        {% if 'entriesCount' in options.components %}
+                            <template x-if="data.length>0">
+                                {% include datatable.componentPath('entriesCount') %}
+                            </template>
+                        {% endif %}
+                    </div>
+
+                {% endblock %}
+                {% block pagination %}
+                    <div class="flex flex-col-reverse text-center md:flex-row md:items-center">
+                        {% if 'pagesCount' in options.components %}
+                            {% include datatable.componentPath('pagesCount') %}
+                        {% endif %}
+                        {% if 'pagination' in options.components %}
+                            <template x-if="pages>1">
+                                {% include datatable.componentPath('pagination') %}
+                            </template>
+                        {% endif %}
+                    </div>
+                {% endblock %}
+            </div>
+        </div>
+        {% endblock %}
+    </template>
+</div>
+{% endblock %}
+
+<script>
+    window.CraftTablecloth_{{ datatable.handle }} = {{ datatable.jsData | json_encode | raw }};
+    window.Tablecloth_{{ datatable.handle }} = {
+        on(event, callback) {
+            window.addEventListener(`tablecloth.{{ datatable.handle }}.${event}`, (e) => {
+                callback(e)
+            })
+        },
+        emit(event, data) {
+            const e = new CustomEvent(`tablecloth.{{ datatable.handle }}.${event}`, {
+                detail: data
+            })
+            window.dispatchEvent(e)
+        }
+    };
+</script>

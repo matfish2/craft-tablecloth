@@ -1,0 +1,35 @@
+<table class="border-collapse table-auto whitespace-no-wrap bg-white table-striped relative">
+    <thead>
+    <tr>
+        {% for column in columns %}
+            <th>{{ column.heading }}</th>
+        {% endfor %}
+    </tr>
+    </thead>
+    <tbody>
+    <template x-for="crow in row.{{ tableHandle }}">
+        <tr>
+            {% for column in columns %}
+                <td class="border-dashed border-t border-gray-200 p-3">
+                    {% if column.templatePath %}
+                        {{ column.renderTemplate('crow.' ~ column.handle) | raw }}
+                    {% elseif column.isList() %}
+                        <span x-html="crow.{{ column.handle }}.label"></span>
+                    {% elseif column.isDate() %}
+                        <span x-text="dateFormat(crow.{{ column.handle }})"></span>
+                    {% else %}
+                        <span x-html="crow.{{ column.handle }}"></span>
+                    {% endif %}
+                </td>
+            {% endfor %}
+        </tr>
+    </template>
+    <template x-if="row.{{ tableHandle }}.length===0">
+        <tr>
+            <td class="border-dashed border-t border-gray-200 p-3" :colspan="colspan">
+                {{ 'No records found' | t('tablecloth') }}
+            </td>
+        </tr>
+    </template>
+    </tbody>
+</table>

@@ -1,0 +1,16 @@
+<div class="field checkboxfield">
+    <div class="input ltr">
+        <input type="checkbox"
+               :id="`col_${column.uid}_{{ option }}`"
+               value="1"
+               :name="`{{ option }}_${column.uid}`"
+               @input="e => columns[i].{{ option }} = e.target.checked"
+               :checked="columns[i].{{ option }}"
+               class="checkbox">
+        <label
+                :for="`col_${column.uid}_{{ option }}`"
+        >
+            {{ option | ucfirst }}
+        </label>
+    </div>
+</div>
