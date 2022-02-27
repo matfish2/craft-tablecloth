@@ -19,6 +19,7 @@ use craft\records\TagGroup;
 use craft\records\UserGroup;
 use craft\records\Volume;
 use craft\web\Controller;
+use craft\web\View;
 use matfish\Tablecloth\enums\Fields;
 use matfish\Tablecloth\enums\FieldTypes;
 use matfish\Tablecloth\exceptions\TableclothException;
@@ -84,7 +85,7 @@ class TablesController extends Controller
             $data = array_merge($data, $this->getFieldsList($datatable));
         }
 
-        return $this->renderTemplate('tablecloth/cp/_edit', $data);
+        return $this->renderTemplate('tablecloth/cp/_edit', $data, View::TEMPLATE_MODE_CP);
     }
 
     /**

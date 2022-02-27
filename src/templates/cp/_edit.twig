@@ -105,7 +105,7 @@
             columns: {{ datatable.getParamAsJson('columns') | raw }},
             enableChildRows:{{ datatable.getParam('enableChildRows')  ? 'true' : 'false' }},
             overrideGeneralSettings: {{ datatable.getParam('overrideGeneralSettings') ? 'true' : 'false' }},
-            datasetPrefilter:"{{ datatable.getParam('datasetPrefilter')}}",
+            datasetPrefilter:"{{ datatable.getParam('datasetPrefilter') | raw }}",
             sectionId:{{ datatable.sectionId ?? "''" }},
             typeId:{{ datatable.typeId ?? "''" }},
             sections:{{ sections | json_encode | raw }},
