@@ -5,8 +5,8 @@
     name:'datasetPrefilter',
     value:datatable.getParam('datasetPrefilter'),
     required: false,
-    instructions:'Write your own SQL to filter down the initial dataset. use [[handle]] as a placeholder for column names',
-    placeholder:"[[postDate]]>DATE_SUB(NOW(),INTERVAL 3 DAY) AND ([[authorId]]=2)",
+    instructions:'Write your own SQL to filter down the initial dataset. use {{handle}} as a placeholder for column names',
+    placeholder:"e.g {{postDate}}>DATE_SUB(NOW(),INTERVAL 3 DAY) AND ({{authorId}}=2)",
     errors:datatable.getErrors('datasetPrefilter'),
     inputAttributes:{
         'v-model':'datasetPrefilter',

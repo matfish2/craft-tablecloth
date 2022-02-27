@@ -109,7 +109,7 @@ new Vue({
             this.columns.splice(index, 1)
         },
         addColumnToSqlFilter(handle) {
-            this.datasetPrefilter += `[[${handle}]]`
+            this.datasetPrefilter += `{{${handle}}}`
             this.$refs.prefilter.focus()
         },
         getSource(source) {
