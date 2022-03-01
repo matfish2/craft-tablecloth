@@ -7,7 +7,7 @@ namespace matfish\Tablecloth\models;
 trait OverrideableSettings
 {
     public ?int $initialPerPage = 10;
-    public ?array $perPageValues = [10, 25, 50, 100];
+    public $perPageValues = [10, 25, 50, 100];
 
     public ?string $dateFormat = 'dd/MM/yyyy';
     public ?string $datetimeFormat = 'dd/MM/yyyy HH:ii:ss';
