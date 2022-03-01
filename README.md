@@ -1,5 +1,7 @@
 ## Craft Tablecloth
 
+![tablecloth)](https://user-images.githubusercontent.com/1510460/156232875-0b8700f0-6299-4425-9d47-b3d82915e298.png)
+
 Tablecloth is a powerful and flexible data tables solution built specifically for CraftCMS. It allows for building a front facing table or index page for any of Craft's native elements, as well as Products and Variants for Craft Commerce.
 
 The plugin comes with a default table powered by Tailwind and AlpineJS. The user can override any component or the entire table, and even change the table layout to a card layout (e.g for displaying products). All table functionality can be triggered programmatically, including filtering, sorting, pagination and row selection, which allows for a complete separation of UI and behavior. The package supports creating "presets" of reusable tables that can be used across data sources. 
