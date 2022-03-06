@@ -37,7 +37,7 @@ class DataTableServerTest extends TableclothTest
             ->typeId($datatable->typeId)
             ->limit($perPage)
             ->offset($perPage)
-            ->orderBy(['dateCreated' => SORT_DESC,'id'=>SORT_DESC])
+            ->orderBy(['dateCreated' => SORT_DESC,'id'=>SORT_ASC])
             ->one()
             ->id;
 

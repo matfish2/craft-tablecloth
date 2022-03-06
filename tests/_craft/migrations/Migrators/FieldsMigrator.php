@@ -17,7 +17,7 @@ use tableclothtests\_craft\migrations\services\UsersService;
 
 class FieldsMigrator extends Migrator
 {
-    public static function add(): bool
+    public static function add($productsOnly = false): bool
     {
         $s = new FieldsService();
         $fields = [];
@@ -27,11 +27,14 @@ class FieldsMigrator extends Migrator
             $fields[] = $s->add($data);
         }
 
-        (new EntryTypeService())->addFields($fields);
-        (new UsersService())->addFields($fields);
-        (new CategoriesService())->addFields($fields);
-        (new TagsService())->addFields($fields);
-        (new AssetsService())->addFields($fields);
+        if (!$productsOnly) {
+            (new EntryTypeService())->addFields($fields);
+            (new UsersService())->addFields($fields);
+            (new CategoriesService())->addFields($fields);
+            (new TagsService())->addFields($fields);
+            (new AssetsService())->addFields($fields);
+        }
+
         (new ProductsService())->addFields($fields);
 
         return true;
