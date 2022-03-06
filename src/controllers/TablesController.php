@@ -179,7 +179,7 @@ class TablesController extends Controller
                 $tableFields[] = $value;
             } elseif ($field['type'] === 'custom' && $field['fieldType'] === Fields::Matrix) {
                 $matrixFields[] = $value;
-            } elseif ($datatable->variantsStrategy === 'nest' && str_contains($field['handle'], 'variant:')) {
+            } elseif ($datatable->hasVariants() && $datatable->variantsStrategy === 'nest' && str_contains($field['handle'], 'variant:')) {
                 $variantFields[] = $value;
             } else {
                 $normalFields[] = $value;
@@ -278,7 +278,7 @@ class TablesController extends Controller
     {
         $columns = $this->request->getBodyParam('columns');
         $columns = array_filter($columns, function($column) {
-            return !!$column['handle'];
+            return (bool)$column['handle'];
         });
 
         if (!$columns) {
