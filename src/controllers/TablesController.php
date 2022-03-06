@@ -277,6 +277,9 @@ class TablesController extends Controller
     private function getColumnsFromRequest(DataTable $dataTable): array
     {
         $columns = $this->request->getBodyParam('columns');
+        $columns = array_filter($columns, function($column) {
+            return !!$column['handle'];
+        });
 
         if (!$columns) {
             return [];
