@@ -277,13 +277,14 @@ class TablesController extends Controller
     private function getColumnsFromRequest(DataTable $dataTable): array
     {
         $columns = $this->request->getBodyParam('columns');
-        $columns = array_filter($columns, function($column) {
-            return (bool)$column['handle'];
-        });
 
         if (!$columns) {
             return [];
         }
+
+        $columns = array_filter($columns, static function($column) {
+            return (bool)$column['handle'];
+        });
 
         $columnsMap = $this->getColumnsMap($dataTable);
 

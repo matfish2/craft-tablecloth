@@ -1,5 +1,9 @@
 # Release Notes for Tablecloth
 
+## 1.0.0-beta.4 - 2022-03-12
+### Fixed
+- Fix initial save issue
+
 ## 1.0.0-beta.3 - 2022-03-06
 ### Fixed
 - Load variant fields on single variant product type
