@@ -4,22 +4,11 @@
 namespace matfish\Tablecloth\models\Column;
 
 
-use craft\records\User;
+use craft\elements\User;
 
 class AuthorColumn extends ListColumn
 {
-//    public function getDbColumn(string $context = self::CONTEXT_SELECT): string
-//    {
-//        $addAlias = $context === self::CONTEXT_SELECT;
-//
-//        $handle = $context === self::CONTEXT_PREFILTER ? "authorId" : "CONCAT(`users`.`firstName`, ' ' ,`users`.`lastName`)";
-//
-//        if ($addAlias) {
-//            $handle .= ' as `authorId__text`';
-//        }
-//
-//        return $handle;
-//    }
+    protected string $label = 'data';
 
     protected function getOptions(): array
     {
@@ -29,8 +18,13 @@ class AuthorColumn extends ListColumn
 
         foreach ($users as $user) {
             $res[] = [
-                'value'=>$user->id,
-                'label'=>$user->firstName ? $user->firstName . ' ' . $user->lastName :  $user->username
+                'value' => $user->id,
+                'data' =>
+                    [
+                        'fullName' => $user->firstName ? $user->firstName . ' ' . $user->lastName : $user->username,
+                        'username' => $user->username,
+                        'photoUrl' => $user->photo ? $user->photo->url : null
+                    ]
             ];
         }
 

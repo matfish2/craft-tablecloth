@@ -1,5 +1,9 @@
 # Release Notes for Tablecloth
 
+## 1.0.0-beta.9 - 2022-03-12
+### Added
+- Author column: get photo url and username
+
 ## 1.0.0-beta.8 - 2022-03-12
 ### Added
 - Client table: Multiple list custom filter support

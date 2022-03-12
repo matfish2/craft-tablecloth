@@ -73,8 +73,9 @@ class Normalizer
             case $column->dataType === DataTypes::Boolean:
                 return new BooleanNormalizer();
             case $column->isSingleList():
-            case $column instanceof AuthorColumn:
                 return new ListNormalizer($column->getList());
+            case $column instanceof AuthorColumn:
+                return new AuthorNormalizer($column->getList());
             case $column->isMultiSelect():
                 return new MultipleListNormalizer($column->getList());
             case $column->fieldType === Fields::Table:
