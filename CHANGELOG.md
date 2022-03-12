@@ -1,6 +1,6 @@
 # Release Notes for Tablecloth
 
-## 1.0.0-beta.4 - 2022-03-12
+## 1.0.0-beta.5 - 2022-03-12
 ### Fixed
 - Fix initial save issue
 
