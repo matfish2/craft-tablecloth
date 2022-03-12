@@ -35,7 +35,7 @@ class TableclothTwigExtension extends TwigExtension
             throw new TableclothException("Cannot find table with handle '{$handle}'");
         }
 
-        $tablePath = $this->getTablePath($dt->preset);
+        $tablePath = $this->getTablePath($dt->handle, $dt->preset);
 
         $view = \Craft::$app->view;
 
@@ -49,7 +49,7 @@ class TableclothTwigExtension extends TwigExtension
 
     }
 
-    private function getTablePath($preset)
+    private function getTablePath($handle, $preset)
     {
         $view = \Craft::$app->view;
 
@@ -58,11 +58,18 @@ class TableclothTwigExtension extends TwigExtension
 
         \Craft::$app->view->setTemplateMode(View::TEMPLATE_MODE_SITE);
 
-        $generalOverridePath = "_tablecloth/presets/{$preset}/template/index";
+        $specificOverridePath = "_tablecloth/tables/{$handle}/template/index";
 
-        if ($view->doesTemplateExist($generalOverridePath, View::TEMPLATE_MODE_SITE)) {
-            $path = $generalOverridePath;
+        if ($view->doesTemplateExist($specificOverridePath, View::TEMPLATE_MODE_SITE)) {
+            $path = $specificOverridePath;
             $mode = View::TEMPLATE_MODE_SITE;
+        } else {
+            $generalOverridePath = "_tablecloth/presets/{$preset}/template/index";
+
+            if ($view->doesTemplateExist($generalOverridePath, View::TEMPLATE_MODE_SITE)) {
+                $path = $generalOverridePath;
+                $mode = View::TEMPLATE_MODE_SITE;
+            }
         }
 
         \Craft::$app->view->setTemplateMode(View::TEMPLATE_MODE_CP);

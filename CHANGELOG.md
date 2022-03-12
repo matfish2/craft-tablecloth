@@ -1,5 +1,9 @@
 # Release Notes for Tablecloth
 
+## 1.0.0-beta.7 - 2022-03-12
+### Fixed
+- Fix index.twig table-level override
+
 ## 1.0.0-beta.6 - 2022-03-12
 ### Fixed
 - Fix pagination active background
