@@ -184,7 +184,7 @@ class DataTable extends Element
     {
 
         $root = \Craft::getAlias('@web');
-        $cpTrigger = getenv('CP_TRIGGER');
+        $cpTrigger = getenv('CP_TRIGGER') ?: 'admin';
         $enabled = json_decode($this->columns, false) ? 'enabled' : '';
 
         switch ($attribute) {

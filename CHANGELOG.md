@@ -1,5 +1,9 @@
 # Release Notes for Tablecloth
 
+## 1.0.0-beta.10 - 2022-03-12
+### Fixed
+- Fix table edit link when CP_TRIGGER is not defined
+
 ## 1.0.0-beta.9 - 2022-03-12
 ### Added
 - Author column: get photo url and username
