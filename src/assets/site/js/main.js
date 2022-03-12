@@ -70,8 +70,10 @@ window.tablecloth = function (handle) {
 
             window.addEventListener(`tablecloth.${this.handle}.filter`, ({detail}) => {
                 let column = detail.column
-                let dataType = this.tableDefinition.columns.find(col => col.handle === column).dataType
-                let data = {...detail, dataType};
+                let col = this.tableDefinition.columns.find(col => col.handle === column)
+                let dataType = col.dataType
+                let multiple = col.multiple
+                let data = {...detail, dataType, multiple};
 
                 let existing = this.customFilters.find(filter => filter.column === column)
                 if (existing) {

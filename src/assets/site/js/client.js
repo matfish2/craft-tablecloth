@@ -43,8 +43,9 @@ export default {
                 let query = this.customFilters[i].query;
                 let dataType = this.customFilters[i].dataType;
                 let operand = this.customFilters[i].operand;
+                let multiple = this.customFilters[i].multiple;
 
-                let cond = this._getCustomFilterCondition(dataType, operand, query)
+                let cond = this._getCustomFilterCondition(dataType, operand, query, multiple)
 
                 if (query || typeof query === 'boolean') {
                     clone = clone.filter(row => cond(row[column], query))
@@ -78,41 +79,52 @@ export default {
 
         return clone;
     },
-    _getCustomFilterCondition(dataType, operand, query) {
+    _getCustomFilterCondition(dataType, operand, query, multiple) {
         if (dataType === 'boolean') {
             return (value, query) => query ? value : !value
         }
 
-        if (dataType==='list') {
-            return (value, query) => value.value===query
+        if (dataType === 'list') {
+            if (multiple) {
+                return (values, query) => {
+                    for (let i = 0; i < values.length; i++) {
+                        if (values[i].value === query) {
+                            return true
+                        }
+                    }
+                    return false
+                }
+            } else {
+                return (value, query) => value.value === query
+            }
         }
 
         // Range filter
         if (typeof query === "object") {
-            return (value, query) => value>=query[0] && value<=query[1]
+            return (value, query) => value >= query[0] && value <= query[1]
         }
 
         if (!operand) {
-            return (value, query) => value===query
+            return (value, query) => value === query
         }
 
-        if (operand==='>') {
-            return (value, query) => value>query
+        if (operand === '>') {
+            return (value, query) => value > query
         }
 
-        if (operand==='<') {
-            return (value, query) => value<query
+        if (operand === '<') {
+            return (value, query) => value < query
         }
 
-         if (operand==='>=') {
-            return (value, query) => value>=query
+        if (operand === '>=') {
+            return (value, query) => value >= query
         }
 
-        if (operand==='<=') {
-            return (value, query) => value<=query
+        if (operand === '<=') {
+            return (value, query) => value <= query
         }
 
-        if (operand==='LIKE') {
+        if (operand === 'LIKE') {
             return (value, query) => value.includes(query)
         }
     },
@@ -138,7 +150,7 @@ export default {
         return this.listColumns.includes(columnHandle)
     },
     _getCellValueForSortAndFilter(row, column) {
-        if (row[column.handle]===null) {
+        if (row[column.handle] === null) {
             return '';
         }
 
@@ -146,6 +158,6 @@ export default {
             return this._getListValuePresentation(row, column)
         }
 
-        return column.dataType==='number' ? parseFloat(row[column.handle]) : row[column.handle]
+        return column.dataType === 'number' ? parseFloat(row[column.handle]) : row[column.handle]
     },
 }
