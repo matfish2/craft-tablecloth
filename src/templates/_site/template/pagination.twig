@@ -10,8 +10,8 @@
 
         <template x-for="page in renderablePages" :key="page">
             <button type="button"
-                    class="ma-0 px-3 py-1 text-gray-700 bg-white hover:bg-blue-400 hover:text-white border-t border-r border-b border-gray-400"
-                    :class="currentPage===page ? 'bg-blue-400 text-white':''"
+                    class="ma-0 px-3 py-1 text-gray-700 hover:bg-blue-400 hover:text-white border-t border-r border-b border-gray-400"
+                    :class="currentPage===page ? 'bg-blue-400 text-white':'bg-white'"
                     @click="setPage(page)"
                     x-text="page">
             </button>
