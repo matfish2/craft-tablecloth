@@ -51,7 +51,7 @@ class DataTable extends Element
     public ?int $sectionId = null;
 
     // Entry \ Product
-    public ?int $typeId = null;
+    public $typeId = null;
 
     // Category \ Tag
     public ?int $groupId = null;

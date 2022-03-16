@@ -111,7 +111,7 @@
             overrideGeneralSettings: {{ datatable.getParam('overrideGeneralSettings') ? 'true' : 'false' }},
             datasetPrefilter:"{{ datatable.getParam('datasetPrefilter') | raw }}",
             sectionId:{{ datatable.sectionId ?? "''" }},
-            typeId:{{ datatable.typeId ?? "''" }},
+            typeId:{{ datatable.typeId ? datatable.typeId : "''" }},
             sections:{{ sections | json_encode | raw }},
             productTypes:{{ productTypes | json_encode | raw }}
         }

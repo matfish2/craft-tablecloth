@@ -6,7 +6,7 @@ new Vue({
     data() {
         return {
             ...Tablecloth,
-            allUsers:Tablecloth.userGroups.length===0,
+            allUsers: Tablecloth.userGroups.length === 0,
             childRowTableColumns: [],
             nestedFieldsMap: Tablecloth.nestedFieldsMap,
             columns: Tablecloth.columns.map(c => {
@@ -33,6 +33,12 @@ new Vue({
         if (this.isNew) {
             this.$watch('name', () => {
                 this.tableHandle = this.name.charAt(0).toLowerCase() + this.name.slice(1).replaceAll(' ', '')
+            });
+
+            this.$watch('source', () => {
+                this.$nextTick(() => {
+                    this.typeId = ''
+                })
             });
 
             this.sectionId = this.sections[0].value
@@ -72,7 +78,7 @@ new Vue({
                     this.enableChildRows = !!value;
                 } else if (name === 'overrideGeneralSettings') {
                     this.overrideGeneralSettings = !!value;
-                } else if (name==='allUsers') {
+                } else if (name === 'allUsers') {
                     this.allUsers = !!value;
                 }
             }
@@ -138,7 +144,7 @@ new Vue({
             return section ? section.entryTypes : []
         },
         selectedType() {
-          return this.typeId ? this.types.find(type=>parseInt(type.value)===parseInt(this.typeId)) : {}
+            return this.typeId ? this.types.find(type => parseInt(type.value) === parseInt(this.typeId)) : {}
         },
         columnHandles() {
             return Object.keys(this.fieldsMap)
