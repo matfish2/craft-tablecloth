@@ -1,5 +1,9 @@
 # Release Notes for Tablecloth
 
+## 1.0.0-beta.12 - 2022-03-16
+### Fixed
+- Fixed issue when switching data source after type selection ([#2](https://github.com/matfish2/craft-tablecloth/issues/2))
+
 ## 1.0.0-beta.11 - 2022-03-16
 ### Fixed
 - Fixed CSS collision with MatrixMate ([#1](https://github.com/matfish2/craft-tablecloth/issues/1))
