@@ -31,7 +31,7 @@
                             ></button>
                         </div>
                     </div>
-                    <div class="fields" v-show="column.visible">
+                    <div class="tc-fields" v-show="column.visible">
                         <input type="hidden" :name="`columns[${i}][handle]`" v-model="column.handle">
                         <input type="hidden" :name="`columns[${i}][heading]`" v-model="column.heading">
                         <input type="hidden" :name="`columns[${i}][filterable]`" v-model="column.filterable">
