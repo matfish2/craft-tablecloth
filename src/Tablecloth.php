@@ -33,8 +33,8 @@ use yii\base\Event;
 
 class Tablecloth extends Plugin
 {
-    public $hasCpSection = true;
-    public $hasCpSettings = true;
+    public bool $hasCpSection = true;
+    public bool $hasCpSettings = true;
 
     /**
      * @var array

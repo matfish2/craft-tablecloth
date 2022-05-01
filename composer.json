@@ -19,7 +19,7 @@
         "docs": "https://github.com/matfish2/craft-tablecloth/blob/master/README.md"
     },
     "require": {
-        "craftcms/cms": "^3.7.0",
+        "craftcms/cms": "4.0.0-beta.4",
         "ext-json": "*"
     },
     "autoload": {
@@ -44,6 +44,13 @@
         "vlucas/phpdotenv": "^3.0",
         "codeception/module-yii2": "^1.1",
         "yiisoft/yii2-shell": "^2.0",
-        "craftcms/commerce": "3.4.9.2"
-    }
+        "craftcms/commerce": "4.*"
+    },
+    "config": {
+        "allow-plugins": {
+            "yiisoft/yii2-composer": true,
+            "craftcms/plugin-installer": true
+        }
+    },
+    "minimum-stability": "dev"
 }
