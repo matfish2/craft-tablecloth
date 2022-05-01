@@ -54,9 +54,15 @@ class Normalizer
 
         return new static($this->datatable, array_map(static function ($row) use ($normalizers) {
             foreach ($normalizers as $column => $normalizer) {
-                $row[$column] = is_null($row[$column]) ?
-                    $normalizer::NULL_VALUE :
-                    $normalizer->normalize($row[$column]);
+                try {
+                    $row[$column] = is_null($row[$column]) ?
+                        $normalizer::NULL_VALUE :
+                        $normalizer->normalize($row[$column]);
+                } catch (\Exception $e) {
+                    // could be thrown if relation is saved but relation doesnt exist anymore
+                    $row[$column] = $normalizer::NULL_VALUE;
+                }
+
             }
             return $row;
         }, $this->data));

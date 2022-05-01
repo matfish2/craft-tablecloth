@@ -9,7 +9,7 @@ class AssetQuery extends BaseElementQuery
 {
     protected function getBuilder(): TableclothQuery
     {
-        return (new AssetQueryBuilder($this->dataTable))->getBaseQuery($this->dataTable->siteId);
+        return (new AssetQueryBuilder($this->dataTable))->getBaseQuery($this->siteId);
     }
 
     protected function getDefaultSort(): string

@@ -12,7 +12,7 @@ class TagQuery extends BaseElementQuery
 
     protected function getBuilder(): TableclothQuery
     {
-        return (new TagQueryBuilder($this->dataTable))->getBaseQuery($this->dataTable->siteId);
+        return (new TagQueryBuilder($this->dataTable))->getBaseQuery($this->siteId);
     }
 
     protected function getDefaultSort(): string

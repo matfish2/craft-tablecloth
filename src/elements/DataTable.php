@@ -271,7 +271,8 @@ class DataTable extends Element
             })->all(),
             'options' => $this->getTableOptions(),
 //            'lists' => $this->getTableLists(),
-            'serverTable' => $this->serverTable
+            'serverTable' => $this->serverTable,
+            'siteId' => Craft::$app->getSites()->currentSite->id
         ];
     }
 

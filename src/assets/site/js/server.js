@@ -20,7 +20,7 @@ export default {
             this.getData(true);
         })
 
-        const {data} = await axios.post(`/?action=tablecloth/site-data/get-count&handle=${this.handle}`);
+        const {data} = await axios.post(`/?action=tablecloth/site-data/get-count&handle=${this.handle}&siteId=${this.tableDefinition.siteId}`);
         this.totalCount = data
 
     },
@@ -55,7 +55,7 @@ export default {
         let query = this.query
         let perPage = this.perPage
 
-        let params = `handle=${this.handle}&p=${this.currentPage}`;
+        let params = `handle=${this.handle}&p=${this.currentPage}&siteId=${this.tableDefinition.siteId}`;
 
         if (sortColumn) {
             params += `&sortColumn=${sortColumn}&sortDirection=${sortDirection}`;
@@ -77,7 +77,7 @@ export default {
         this.data = this._transformDataset(dataRes.data)
         this.dispatch('loaded.data', this.data)
 
-        let countParams = `handle=${this.handle}`;
+        let countParams = `handle=${this.handle}&siteId=${this.tableDefinition.siteId}`;
 
         if (query) {
             countParams += `&q=${query}`

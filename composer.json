@@ -45,5 +45,11 @@
         "codeception/module-yii2": "^1.1",
         "yiisoft/yii2-shell": "^2.0",
         "craftcms/commerce": "3.4.9.2"
+    },
+    "config": {
+        "allow-plugins": {
+            "yiisoft/yii2-composer": true,
+            "craftcms/plugin-installer": true
+        }
     }
 }

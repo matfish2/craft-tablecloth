@@ -67,7 +67,10 @@ class SiteDataController extends \craft\web\Controller
     private function getTableByHandle(): DataTable
     {
         $handle = $this->request->getQueryParam('handle');
+        $siteId = $this->request->getQueryParam('siteId');
+
         $dataTable = DataTable::find()->handle($handle)->one();
+        $dataTable->siteId = $siteId;
 
         if (!$dataTable) {
             throw new NotFoundHttpException("Datatable {$handle} not found.");

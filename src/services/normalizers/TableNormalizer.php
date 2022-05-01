@@ -64,11 +64,11 @@ class TableNormalizer implements NormalizerInterface
         }
 
         if ($data['type'] === 'date') {
-            return DateTimeHelper::toDateTime($value)->format('Y-m-d H:i:s');
+            return $value ? DateTimeHelper::toDateTime($value)->format('Y-m-d H:i:s') : '';
         }
 
         if ($data['type'] === 'time') {
-            return DateTimeHelper::toDateTime($value)->format('H:i');
+            return $value ? DateTimeHelper::toDateTime($value)->format('H:i') : '';
         }
 
         return $value;
