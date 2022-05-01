@@ -1,5 +1,9 @@
 # Release Notes for Tablecloth
 
+## 1.0.0-beta.13 - 2022-05-01
+### Fixed
+- Fixed issue where data was always pulled from primary site rather than current site ([#3](https://github.com/matfish2/craft-tablecloth/issues/3))
+
 ## 1.0.0-beta.12 - 2022-03-16
 ### Fixed
 - Fixed issue when switching data source after type selection ([#2](https://github.com/matfish2/craft-tablecloth/issues/2))
