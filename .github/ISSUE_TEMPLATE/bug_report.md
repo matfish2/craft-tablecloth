@@ -2,13 +2,19 @@
 name: Bug report
 about: Create a report to help us improve
 title: ''
-labels: ''
-assignees: ''
+labels: bug
+assignees: matfish2
 
 ---
 
+**Tablecloth version**
+[e.g 1.0.0-beta.13]
+
 **Describe the bug**
 A clear and concise description of what the bug is.
+
+**Debug logs**
+If applicable please include stack trace or error message
 
 **To Reproduce**
 Steps to reproduce the behavior:
