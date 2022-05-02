@@ -7,8 +7,9 @@ assignees: matfish2
 
 ---
 
-**Tablecloth version**
-[e.g 1.0.0-beta.13]
+**Versions**
+Craft: [e.g 3.7.39]
+Tablecloth: [e.g 1.0.0-beta.13]
 
 **Describe the bug**
 A clear and concise description of what the bug is.
