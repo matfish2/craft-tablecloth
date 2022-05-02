@@ -208,7 +208,6 @@ class MatrixCombiner
         $nrm = $this->normalizersMap[$cls];
         $c = $data['options'] ?? [];
 
-
         return (new $nrm($c))->normalize($value);
     }
 

@@ -10,7 +10,7 @@ class UserQuery extends BaseElementQuery
 {
     protected function getBuilder(): TableclothQuery
     {
-        return (new UserQueryBuilder($this->dataTable))->getBaseQuery($this->dataTable->siteId);
+        return (new UserQueryBuilder($this->dataTable))->getBaseQuery($this->siteId);
     }
 
     protected function getDefaultSort(): string

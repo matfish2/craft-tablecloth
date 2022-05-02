@@ -10,7 +10,7 @@ class CategoryQuery extends BaseElementQuery
 
     protected function getBuilder(): TableclothQuery
     {
-        return (new CategoryQueryBuilder($this->dataTable->groupId, $this->dataTable->siteId))->getBaseQuery($this->dataTable->siteId);
+        return (new CategoryQueryBuilder($this->dataTable->groupId, $this->siteId))->getBaseQuery($this->siteId);
     }
 
     protected function getDefaultSort(): string

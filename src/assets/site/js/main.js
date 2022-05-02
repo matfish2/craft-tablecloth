@@ -9,15 +9,16 @@ const MOBILE_BREAKPOINT = 600;
 let isMobile = window.outerWidth < MOBILE_BREAKPOINT;
 
 window.tablecloth = function (handle) {
-    let isServerTable = window[`CraftTablecloth_${handle}`].serverTable;
-
+    let jsData = window[`CraftTablecloth_${handle}`];
+    let isServerTable = jsData.serverTable;
+    let siteId = jsData.siteId;
     let funcs = isServerTable ? server : client;
 
     return {
         async init() {
             this.loading = true
             this.dispatch('init.loading');
-            const {data} = await axios.get(`/?action=tablecloth/site-data/get-initial-data&handle=${handle}`);
+            const {data} = await axios.get(`/?action=tablecloth/site-data/get-initial-data&handle=${handle}&siteId=${siteId}`);
             this.dispatch('init.loaded', data);
 
             this.data = this._transformDataset(data)

@@ -10,10 +10,12 @@ abstract class BaseSourceQuery
 {
     protected DataTable $dataTable;
     protected TableclothQuery $builder;
+    protected ?int $siteId;
 
     public function __construct(DataTable $dataTable)
     {
         $this->dataTable = $dataTable;
+        $this->siteId = $this->dataTable->siteId;
     }
 
     /**

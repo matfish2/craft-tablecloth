@@ -10,7 +10,7 @@ class EntryQuery extends BaseElementQuery
 
     protected function getBuilder(): TableclothQuery
     {
-        return (new EntryQueryBuilder($this->dataTable))->getBaseQuery($this->dataTable->siteId);
+        return (new EntryQueryBuilder($this->dataTable))->getBaseQuery($this->siteId);
     }
 
     protected function getDefaultSort(): string
