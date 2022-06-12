@@ -26,6 +26,7 @@ class ProductsFeedGenerator extends FeedGenerator
             'title' => FakerService::words(random_int(3, 5)),
             'description' => FakerService::sentence(),
             'postDate'=>FakerService::date(),
+            'expiryDate'=>FakerService::date(),
             'variant' => $this->getVariants(),
             'enabled'=>FakerService::boolean(0.2),
             'freeShipping'=>FakerService::boolean(0.7),

@@ -325,13 +325,13 @@ class DataTableServerTest extends TableclothTest
         }
 
         $data = $datatable->getData(['filters' => [
-            'numberTest' => 33,
+            'numberTest' => 30,
         ]]);
 
         $this->assertGreaterThan(0, count($data));
         codecept_debug("Found " . count($data) . " Results");
         foreach ($data as $row) {
-            $this->assertEquals(33, $row['numberTest']);
+            $this->assertEquals(30, $row['numberTest']);
         }
 
         $data = $datatable->getData(['filters' => [

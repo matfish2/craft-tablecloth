@@ -108,7 +108,7 @@ class Column extends Model implements ColumnInterface
      */
     protected ?string $table = null;
 
-    public function init()
+    public function init() : void
     {
         parent::init();
 

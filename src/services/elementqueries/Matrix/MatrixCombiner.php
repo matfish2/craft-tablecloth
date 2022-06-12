@@ -79,7 +79,7 @@ class MatrixCombiner
         $this->fieldsMap = $this->createFieldsMap();
 
         $data = $this->attachOwnerIdAsKey($this->data, 'id');
-        $nestedData = $this->attachOwnerIdAsKey($this->nestedData, 'ownerId');
+        $nestedData = $this->attachOwnerIdAsKey($this->nestedData, 'primaryOwnerId');
 
         foreach ($nestedData as $key => $blocks) {
 

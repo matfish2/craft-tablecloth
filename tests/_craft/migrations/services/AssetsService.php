@@ -6,6 +6,8 @@ namespace tableclothtests\_craft\migrations\services;
 
 class AssetsService
 {
+    use FieldsToElementsTrait;
+
     public function addFields($fields)
     {
         $s = \Craft::$app->volumes;
@@ -13,7 +15,7 @@ class AssetsService
         $layout = $grp->getFieldLayout();
         $tabs = $layout->getTabs();
 
-        $tabs[0]->setFields(array_merge($tabs[0]->getFields(), $fields));
+        $tabs[0]->setElements($this->getElementsFromFields($fields, $tabs[0]));
 
         $layout->setTabs($tabs);
 

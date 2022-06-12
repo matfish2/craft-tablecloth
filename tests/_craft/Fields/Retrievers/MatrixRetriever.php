@@ -28,7 +28,7 @@ class MatrixRetriever extends FieldValueRetriever
         foreach ($value->all() as $block) {
             $handle = $block->type->handle;
             $values = $block->fieldValues;
-            $fields = $block->type->fields;
+            $fields = $block->type->getCustomFields();
             $vals = [];
 
             foreach ($values as $k => $v) {

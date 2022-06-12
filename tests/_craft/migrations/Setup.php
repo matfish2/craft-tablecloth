@@ -9,8 +9,11 @@ class Setup extends \craft\db\Migration
 {
     public function safeUp()
     {
+        echo 'Migrating sections...';
         SectionMigrator::add();
+        echo 'Migrating products...';
         (new ProductsMigrator)->add();
+        echo 'Migrating fields...';
         FieldsMigrator::add();
     }
 

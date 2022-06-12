@@ -123,7 +123,7 @@ class DataTableTest extends TableclothTest
         $max = Entry::find()
             ->typeId(1)
             ->sectionId(1)
-            ->enabledForSite()
+//            ->enabledForSite()
             ->select('entries.id')
             ->orderBy([
                 'entries.dateCreated' => SORT_DESC,
@@ -149,11 +149,12 @@ class DataTableTest extends TableclothTest
         $expected = Entry::find()
             ->typeId(1)
             ->sectionId(1)
-            ->enabledForSite()
+//            ->enabledForSite()
             ->select('entries.postDate')
             ->orderBy('entries.postDate ASC')
             ->one()
             ->postDate
+            ->setTimezone(new \DateTimeZone('GMT'))
             ->format('Y-m-d H:i:s');
 
         $this->assertEquals($expected, $actual);

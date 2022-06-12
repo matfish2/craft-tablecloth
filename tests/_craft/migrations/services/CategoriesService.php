@@ -6,6 +6,8 @@ namespace tableclothtests\_craft\migrations\services;
 
 class CategoriesService
 {
+    use FieldsToElementsTrait;
+
     public function addFields($fields)
     {
         $s = \Craft::$app->categories;
@@ -13,7 +15,7 @@ class CategoriesService
         $layout = $grp->getFieldLayout();
         $tabs = $layout->getTabs();
 
-        $tabs[0]->setFields(array_merge($tabs[0]->getFields(), $fields));
+        $tabs[0]->setElements($this->getElementsFromFields($fields, $tabs[0]));
 
         $layout->setTabs($tabs);
 

@@ -10,6 +10,8 @@ use craft\models\FieldLayout;
 
 class ProductsService
 {
+    use FieldsToElementsTrait;
+
     public function addFields($fields)
     {
         $types = Commerce::getInstance()->productTypes->getAllProductTypes();
@@ -30,7 +32,7 @@ class ProductsService
 
             }
 
-            $tabs[0]->setFields(array_merge($tabs[0]->getFields(), $fields));
+            $tabs[0]->setElements($this->getElementsFromFields($fields, $tabs[0]));
 
             $layout->setTabs($tabs);
 
@@ -49,7 +51,7 @@ class ProductsService
                 $vtabs = $vlayout->getTabs();
 
 
-                $vtabs[0]->setFields(array_merge($vtabs[0]->getFields(), $fields));
+                $vtabs[0]->setElements($this->getElementsFromFields($fields, $vtabs[0]));
 
                 $vlayout->setTabs($vtabs);
                 $behavior = $type->getBehavior('variantFieldLayout');

@@ -46,15 +46,16 @@ class MatrixQueryBuilder
         ])->from(['elements' => Table::ELEMENTS])
             ->innerJoin(['elements_sites' => Table::ELEMENTS_SITES], '[[elements_sites.elementId]] = [[elements.id]]')
             ->innerJoin(['matrixblocks' => Table::MATRIXBLOCKS], '[[matrixblocks.id]] = [[elements.id]]')
+            ->innerJoin(['matrixblocksowners' => Table::MATRIXBLOCKS_OWNERS], '[[matrixblocks.id]] = [[matrixblocksowners.blockId]]')
             ->innerJoin(['content' => $this->field->contentTable], '[[content.elementId]] = [[elements.id]] AND [[content.siteId]] = [[elements_sites.siteId]]')
-            ->where("[[matrixblocks.fieldId]]={$this->field->id}) AND ([[matrixblocks.ownerId]] in ({$elements})")
+            ->where("[[matrixblocks.fieldId]]={$this->field->id}) AND ([[matrixblocksowners.ownerId]] in ({$elements})")
             ->andWhere([
                 'elements.archived' => false,
                 'elements.dateDeleted' => null,
                 'elements.draftId' => null,
                 'elements.revisionId' => null
             ])->orderBy([
-                'matrixblocks.sortOrder' => SORT_ASC
+                'matrixblocksowners.sortOrder' => SORT_ASC
             ]);
 
         if (Craft::$app->getIsMultiSite(false, true)) {
@@ -63,16 +64,17 @@ class MatrixQueryBuilder
 
         return (new TableclothQuery())
             ->select([
-                'matrixblocks.ownerId',
+                'matrixblocks.primaryOwnerId',
                 'matrixblocktypes.handle'
             ])->from(['subquery' => $subquery])
             ->innerJoin(['matrixblocks' => Table::MATRIXBLOCKS], '[[matrixblocks.id]] = [[subquery.elementsId]]')
+            ->innerJoin(['matrixblocksowners' => Table::MATRIXBLOCKS_OWNERS], '[[matrixblocks.id]] = [[matrixblocksowners.blockId]]')
             ->innerJoin(['elements' => Table::ELEMENTS], '[[elements.id]] = [[subquery.elementsId]]')
             ->innerJoin(['elements_sites' => Table::ELEMENTS_SITES], '[[elements_sites.id]] = [[subquery.elementsSitesId]]')
             ->innerJoin(['content' => $this->field->contentTable], '[[content.id]] = [[subquery.contentId]]')
             ->innerJoin(['matrixblocktypes' => Table::MATRIXBLOCKTYPES], '[[matrixblocktypes.id]] = [[typeId]]')
             ->orderBy([
-                'matrixblocks.sortOrder' => SORT_ASC
+                'matrixblocksowners.sortOrder' => SORT_ASC
             ]);
     }
 }

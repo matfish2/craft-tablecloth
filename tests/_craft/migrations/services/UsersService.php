@@ -10,6 +10,8 @@ use craft\models\FieldLayout;
 
 class UsersService
 {
+    use FieldsToElementsTrait;
+
     public function addFields($fields)
     {
         $layout = new FieldLayout();
@@ -27,7 +29,7 @@ class UsersService
 
         $tabs = $layout->getTabs();
 
-        $tabs[0]->setFields(array_merge($tabs[0]->getFields(), $fields));
+        $tabs[0]->setElements($this->getElementsFromFields($fields,$tabs[0]));
 
         $layout->setTabs($tabs);
 

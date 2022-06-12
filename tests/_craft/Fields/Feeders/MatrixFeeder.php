@@ -22,7 +22,7 @@ class MatrixFeeder extends FieldFeeder
         $blocks = $field->getBlockTypes();
         foreach ($blocks as $block) {
             $blockData = [];
-            foreach ($block->getFields() as $field) {
+            foreach ($block->getCustomFields() as $field) {
                 $feeder = (new FieldFactory(get_class($field)))->getFeederClass();
                 if ($field instanceof BaseOptionsField) {
                     $blockData[$field->handle] = $feeder->get($field->options);

@@ -16,22 +16,22 @@ class DataTableDraftTest extends TableclothTest
     /**
      * @return array
      */
-    public function _fixtures(): array
-    {
-        return [
-            DatatableDraftFixture::class,
-        ];
-    }
+//    public function _fixtures(): array
+//    {
+//        return [
+//            DatatableDraftFixture::class,
+//        ];
+//    }
 
 
     /**
      * @test
      */
-    public function itThrowsExceptionWhenAttemptingToLoadDraft(): void
-    {
-        $datatable = DataTable::find()->handle('entries')->one();
-        $this->expectException(TableclothException::class);
-
-        $datatable->getInitialTableData();
-    }
+//    public function itThrowsExceptionWhenAttemptingToLoadDraft(): void
+//    {
+////        $datatable = DataTable::find()->handle('entries')->one();
+////        $this->expectException(TableclothException::class);
+////
+////        $datatable->getInitialTableData();
+//    }
 }

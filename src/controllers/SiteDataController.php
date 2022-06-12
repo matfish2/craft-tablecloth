@@ -9,7 +9,7 @@ use yii\web\NotFoundHttpException;
 class SiteDataController extends \craft\web\Controller
 {
     public $enableCsrfValidation = false;
-    public $allowAnonymous = self::ALLOW_ANONYMOUS_OFFLINE | self::ALLOW_ANONYMOUS_LIVE;
+    public array|bool|int $allowAnonymous = self::ALLOW_ANONYMOUS_OFFLINE | self::ALLOW_ANONYMOUS_LIVE;
 
     /**
      * server and client tables - initial request

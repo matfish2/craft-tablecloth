@@ -5,20 +5,22 @@ namespace tableclothtests\_craft\Fields\Creators;
 
 
 use Craft;
-use craft\base\VolumeInterface;
+use craft\base\Fs;
+use craft\base\FsInterface;
 use craft\elements\Asset;
+use craft\fs\Local;
 use craft\helpers\Assets;
+use craft\models\Volume;
 use craft\records\User;
 use craft\records\VolumeFolder;
 use craft\services\Path;
-use craft\volumes\Local;
 
 class AssetsCreator extends FieldCreator
 {
     public function getFieldData(): array
     {
         $volume = $this->generateAssets();
-        $imagesFolderId = $this->getImagesFolderId($volume->id);
+        $imagesFolderId = 'volume:' . $volume->uid;
 
         return [
             $this->settingsKey => [
@@ -34,7 +36,7 @@ class AssetsCreator extends FieldCreator
     /**
      * @throws \Exception
      */
-    private function generateAssets() : VolumeInterface
+    private function generateAssets()
     {
         $volume = Craft::$app->volumes->getVolumeByHandle('volume');
 
@@ -102,37 +104,48 @@ class AssetsCreator extends FieldCreator
         return $asset;
     }
 
-    private function generateVolume(): VolumeInterface
+    private function generateVolume()
     {
-        $volume = Craft::$app->volumes->getVolumeByHandle('volume');
+        $fsService = Craft::$app->getFs();
 
-        if ($volume) {
-            return $volume;
-        }
-
-        $volumesService = Craft::$app->getVolumes();
-
-        $volume = $volumesService->createVolume([
+        /** @var FsInterface|Fs $fs */
+        $fs = $fsService->createFilesystem([
             'type' => Local::class,
-            'name' => 'Volume',
-            'handle' => 'volume',
-            'hasUrls' => 1,
+            'name' => 'Local',
+            'handle' => 'local',
+            'hasUrls' => true,
             'url' => '@web/volume',
             'settings' => [
                 'path' => '@webroot/volume'
             ]
         ]);
 
-        $volumesService->saveVolume($volume);
+        if (!$fsService->saveFilesystem($fs)) {
+            die('Couldn’t save filesystem.');
+        }
 
-        return $volume;
+        $volume = Craft::$app->volumes->getVolumeByHandle('volume');
+
+        if ($volume) {
+            return $volume;
+        }
+
+        Craft::$app->getVolumes()->saveVolume(new Volume(
+            [
+                'fs' => 'local',
+                'name' => 'Volume',
+                'handle' => 'volume',
+            ]
+        ));
+
+        return Craft::$app->volumes->getVolumeByHandle('volume');
     }
 
-    private function getImagesFolderId($volumeId): string
-    {
-        $folder = Craft::$app->assets->getRootFolderByVolumeId($volumeId);
-
-        return 'folder:' . $folder->uid;
-    }
+//    private function getImagesFolderId($volumeId): string
+//    {
+////        $folder = Craft::$app->assets->getRootFolderByVolumeId($volumeId);
+//
+//        return 'folder:' . $folder->uid;
+//    }
 
 }

@@ -93,8 +93,9 @@ abstract class BaseElementQuery extends BaseSourceQuery
 //                $this->builder->leftJoin("list_$sortColumn", $column->getDbColumn(Column::CONTEXT_JOIN), 'value', 'content', true);
 //            }
             $this->builder->orderBy([$column->getDbColumn(Column::CONTEXT_SORT) => $sortDirection === 'ASC' ? SORT_ASC : SORT_DESC]);
+
         } else {
-            $this->builder->orderBy([$this->getDefaultSort() => SORT_DESC]);
+            $this->builder->orderBy([$this->getDefaultSort() => SORT_DESC,"[[{$this->getTableName()}.id]]"=>SORT_ASC]);
         }
 
         $data = $this->eagerLoadRelations();

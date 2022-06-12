@@ -121,7 +121,7 @@ class ProductFields extends BaseElementFields
             $fields = [];
 
             /** @var Field $field */
-            foreach ($fieldLayout->getFields() as $field) {
+            foreach ($fieldLayout->getCustomFields() as $field) {
                 $fieldConfig = $this->createFieldConfig($field, 'variant:');
                 $fields[] = array_merge($fieldConfig, ['type' => 'custom']);
             }
