@@ -1,5 +1,8 @@
 # Release Notes for Tablecloth
 
+## 2.0.1 - 2022-06-12
+- Craft 4: Initial Release
+
 ## 1.0.0-beta.13 - 2022-05-01
 ### Fixed
 - Fixed issue where data was always pulled from primary site rather than current site ([#3](https://github.com/matfish2/craft-tablecloth/issues/3))
