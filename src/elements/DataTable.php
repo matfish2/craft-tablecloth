@@ -129,6 +129,11 @@ class DataTable extends Element
         return !$this->id;
     }
 
+    public function canDelete(User $user): bool
+    {
+        return true;
+    }
+
     /**
      * @inheritdoc
      */
