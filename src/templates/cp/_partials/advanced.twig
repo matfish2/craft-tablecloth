@@ -14,7 +14,7 @@
 }) }}
 
 <ul class="handles-list">
-    <li v-for="column in columnHandles">
+    <li v-for="column in queryableColumnHandles">
         <button type="button" @click="addColumnToSqlFilter(column)">${column}</button>
     </li>
 </ul>

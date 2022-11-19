@@ -1,5 +1,8 @@
 # Release Notes for Tablecloth
 
+## 2.0.3 - 2022-11-19
+- Remove matrix and table fields from dataset prefilter helper tags
+
 ## 2.0.2 - 2022-11-19
 - Allow table deletion
 - Removed ID from index table

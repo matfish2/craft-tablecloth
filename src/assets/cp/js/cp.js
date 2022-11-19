@@ -148,6 +148,14 @@ new Vue({
         },
         columnHandles() {
             return Object.keys(this.fieldsMap)
+        },
+        queryableColumnHandles() {
+            const matrixHandles = Tablecloth.matrixFields.map(f => f.value)
+            const tableHandles = Tablecloth.tableFields.map(f => f.value)
+
+            const nonQueryableHandles = matrixHandles.concat(tableHandles)
+
+            return this.columnHandles.filter(c => !nonQueryableHandles.includes(c))
         }
     }
 })
