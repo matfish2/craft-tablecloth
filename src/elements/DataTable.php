@@ -13,6 +13,7 @@ use craft\elements\Tag;
 use craft\elements\User;
 use craft\fields\Matrix;
 use craft\fields\Table;
+use craft\helpers\UrlHelper;
 use craft\web\View;
 use matfish\Tablecloth\actions\DeleteAction;
 use matfish\Tablecloth\collections\ColumnsCollection;
@@ -137,6 +138,38 @@ class DataTable extends Element
     /**
      * @inheritdoc
      */
+    public function getCpEditUrl(): ?string
+    {
+        $cpEditUrl = $this->cpEditUrl();
+
+        if (!$cpEditUrl) {
+            return null;
+        }
+
+        $params = [];
+
+        return UrlHelper::urlWithParams($cpEditUrl, $params);
+    }
+
+    public function cpEditUrl(): ?string
+    {
+        $path = sprintf('tablecloth/tables/%s', $this->id);
+        return UrlHelper::cpUrl($path);
+    }
+
+    public function canView(User $user): bool
+    {
+        return true;
+    }
+
+    public function getUiLabel(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @inheritdoc
+     */
     public static function displayName(): string
     {
         return \Craft::t('tablecloth', 'Table');
@@ -188,14 +221,12 @@ class DataTable extends Element
     public function getTableAttributeHtml($attribute): string
     {
 
-        $root = \Craft::getAlias('@web');
-        $cpTrigger = getenv('CP_TRIGGER') ?: 'admin';
         $enabled = json_decode($this->columns, false) ? 'enabled' : '';
 
         switch ($attribute) {
-            case 'name':
+            case 'enabled':
             {
-                return "<span class='status $enabled'></span><a href='$root/$cpTrigger/tablecloth/tables/$this->id'>$this->name</a>";
+                return "<span class='status $enabled'></span>";
             }
             case 'source':
             {
@@ -209,7 +240,7 @@ class DataTable extends Element
 
     public static function defineDefaultTableAttributes(string $source): array
     {
-        return ['name', 'handle', 'source'];
+        return ['enabled', 'handle', 'source'];
     }
 
     /**
@@ -218,8 +249,8 @@ class DataTable extends Element
     protected static function defineTableAttributes(): array
     {
         return [
-            'id' => \Craft::t('app', 'ID'),
-            'name' => \Craft::t('app', 'Name'),
+//            'id' => \Craft::t('app', 'ID'),
+            'enabled' => \Craft::t('app', 'Enabled?'),
             'handle' => \Craft::t('app', 'Handle'),
             'source' => \Craft::t('tablecloth', 'Source'),
         ];
