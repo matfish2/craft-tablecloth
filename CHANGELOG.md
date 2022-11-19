@@ -1,5 +1,9 @@
 # Release Notes for Tablecloth
 
+## 2.0.2 - 2022-11-19
+- Allow table deletion
+- Removed ID from index table
+
 ## 2.0.1 - 2022-06-12
 - Craft 4: Initial Release
 
