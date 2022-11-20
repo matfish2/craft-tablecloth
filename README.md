@@ -15,7 +15,7 @@ The table can then be rendered anywhere in the page with a simple twig function.
 
 ## Documentation
 
-The full documentation can be found [here](https://matanya.gitbook.io/craft-tablecloth/).
+The full documentation can be found [here](https://tablecloth.craftcmsplugins.com/).
 
 
 ## License
