@@ -53,6 +53,7 @@ abstract class TableclothQueryBuilder
             ->where([
                 'elements.archived' => false,
                 'elements.enabled' => true,
+                'elements_sites.enabled'=>true,
                 'elements.dateDeleted' => null,
                 'elements.draftId' => null,
                 'elements.revisionId' => null

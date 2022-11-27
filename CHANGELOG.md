@@ -1,5 +1,11 @@
 # Release Notes for Tablecloth
 
+## 2.1.0 - 2022-11-27
+### Added
+- Add Nested Structure option
+### Fixed
+- Do not load element which is disabled for site
+
 ## 2.0.3 - 2022-11-19
 - Remove matrix and table fields from dataset prefilter helper tags
 
