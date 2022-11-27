@@ -14,6 +14,7 @@ use craft\elements\User;
 use craft\fields\Matrix;
 use craft\fields\Table;
 use craft\helpers\UrlHelper;
+use craft\records\Section;
 use craft\web\View;
 use matfish\Tablecloth\actions\DeleteAction;
 use matfish\Tablecloth\collections\ColumnsCollection;
@@ -63,6 +64,9 @@ class DataTable extends Element
 
     // Product
     public ?string $variantsStrategy = 'nest';
+
+    public ?string $structureStrategy = 'nest_data';
+    public ?int $structureNestingLevel = null;
 
     public $columns;
 
@@ -117,9 +121,25 @@ class DataTable extends Element
             [['userGroups'], 'validateUserGroups'],
             [['serverTable', 'filterPerColumn', 'overrideGeneralSettings', 'initialSortAsc'], 'boolean'],
             [['debounce', 'thumbnailWidth'], 'integer'],
-            [['initialSortColumn', 'externalApiDetails', 'variantsStrategy'], 'string'],
+            [['initialSortColumn', 'externalApiDetails', 'variantsStrategy', 'structureStrategy'], 'string'],
             ['datasetPrefilter', 'validatePrefilter']
         ];
+    }
+
+    /**
+     * @return bool
+     */
+    public function isStructure(): bool
+    {
+        return $this->sectionId && Section::findOne($this->sectionId)->type === 'structure';
+    }
+
+    /**
+     * @return ?int
+     */
+    public function structureId() : ?int
+    {
+        return Section::findOne($this->sectionId)->structureId;
     }
 
     /**
@@ -515,6 +535,7 @@ class DataTable extends Element
     /**
      * @return array
      * @throws \JsonException
+     * @throws TableclothException
      */
     public function getInitialTableData(): array
     {
@@ -616,6 +637,7 @@ class DataTable extends Element
     /**
      * @param $handle
      * @return Column|null
+     * @throws TableclothException
      */
     public function getColumnByHandle($handle): ?Column
     {
@@ -807,7 +829,9 @@ class DataTable extends Element
             'typeId' => $this->typeId,
             'groupId' => $this->groupId,
             'userGroups' => json_encode_if($this->userGroups),
-            'variantsStrategy' => $this->variantsStrategy
+            'variantsStrategy' => $this->variantsStrategy,
+            'structureStrategy' => $this->structureStrategy,
+            'structureNestingLevel' => $this->structureNestingLevel
         ];
     }
 
@@ -821,6 +845,8 @@ class DataTable extends Element
             'name' => $this->name,
             'handle' => $this->handle,
             'variantsStrategy' => $this->variantsStrategy,
+            'structureStrategy' => $this->structureStrategy,
+            'structureNestingLevel' => $this->structureNestingLevel,
             'columns' => json_encode_if($this->columns),
             'serverTable' => $this->serverTable,
             'filterPerColumn' => $this->filterPerColumn,

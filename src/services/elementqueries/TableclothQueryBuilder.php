@@ -24,7 +24,9 @@ abstract class TableclothQueryBuilder
         'categories' => Table::CATEGORIES,
         'users' => Table::USERS,
         'products' => '{{%commerce_products}}',
-        'variants' => '{{%commerce_variants}}'
+        'variants' => '{{%commerce_variants}}',
+        'structureelements' => '{{%structureelements}}',
+        'structureelements_parents' => '{{%structureelements}}'
     ];
 
     /**
@@ -69,6 +71,17 @@ abstract class TableclothQueryBuilder
             ->innerJoin($this->aliasedTable('elements_sites'), '[[elements_sites.id]] = [[subquery.elementsSitesId]]')
             ->innerJoin($this->aliasedTable('content'), '[[content.id]] = [[subquery.contentId]]')
             ->innerJoin($this->aliasedTable($this->baseTable), "[[{$this->baseTable}.id]] = [[subquery.elementsId]]");
+
+        if ($this->dataTable->isStructure()) {
+            $structureId = $this->dataTable->structureId();
+            $query->leftJoin($this->aliasedTable('structureelements'), "[[structureelements.elementId]] = [[elements.id]] AND [[structureelements.structureId]]={$structureId}");
+            $subQuery->leftJoin($this->aliasedTable('structureelements'), "[[structureelements.elementId]] = [[elements.id]] AND [[structureelements.structureId]]={$structureId}");
+
+//            if ($this->dataTable->structureStrategy === 'nest_data') {
+                $query->leftJoin($this->aliasedTable('structureelements_parents'), "[[structureelements.lft]] BETWEEN [[structureelements_parents.lft]] AND [[structureelements_parents.rgt]] AND [[structureelements_parents.elementId]] IS NOT NULL AND [[structureelements_parents.elementId]]!=[[structureelements.elementId]] AND [[structureelements_parents.structureId]]={$structureId} AND [[structureelements.level]]=[[structureelements_parents.level]]+1");
+//            }
+
+        }
 
         return $this->manipulateQuery($query);
     }

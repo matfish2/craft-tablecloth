@@ -54,7 +54,8 @@ class TablesController extends Controller
         'thumbnailWidth' => 'integer',
         'height' => 'integer',
         'preset' => 'string',
-        'variantsStrategy'=>'string'
+        'variantsStrategy' => 'string',
+        'structureStrategy' => 'string'
     ];
 
     /**
@@ -238,6 +239,7 @@ class TablesController extends Controller
             return [
                 'label' => $section->name,
                 'value' => $section->id,
+                'type' => $section->type,
                 'entryTypes' => array_map(static function ($entryType) {
                     return [
                         'label' => $entryType->name,
@@ -282,7 +284,7 @@ class TablesController extends Controller
             return [];
         }
 
-        $columns = array_filter($columns, static function($column) {
+        $columns = array_filter($columns, static function ($column) {
             return (bool)$column['handle'];
         });
 

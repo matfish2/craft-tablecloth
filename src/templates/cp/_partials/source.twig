@@ -80,6 +80,44 @@
 
         </div>
     </div>
+
+    <div class="dt-structure-options" v-if="selectedSection.type==='structure'">
+        {{ forms.radioGroupField({
+            label: 'Structure Startegy'|t('app'),
+            id: 'structureStrategy',
+            name: 'structureStrategy',
+            value: datatable.getParam('structureStrategy'),
+            options:[
+                {
+                    value:'nest_data',
+                    label:'Load data in a nested strucure (each root level entry is a row)'
+                },
+                {
+                    value:'nest_visual',
+                    label:'Load data in a flat single level (each entry has a row). Represent nesting visually when no sorting is applied'
+                },
+                {
+                    value:'no_nesting',
+                    label:'Load data in a flat single level (each entry has a row).'
+                },
+            ],
+            required: true,
+            errors: datatable.getErrors('structureStrategy'),
+        }) }}
+
+        <div class="nestingLevel">
+            {{ forms.selectField({
+                label: 'Sturcture Nesting Level'|t('app'),
+                description:'Optionally set a maximum level of nesting',
+                id: 'structureNestingLevel',
+                name: 'structureNestingLevel',
+                value: datatable.getParam('structureNestingLevel'),
+                options:['All Levels',1,2,3],
+                required: true,
+                errors: datatable.getErrors('structureNestingLevel')
+            }) }}
+        </div>
+    </div>
 </div>
 
 <div id="dt-catgroup" v-if="source==='craft\\elements\\Category'">
@@ -138,15 +176,15 @@
         }
     }) }}
     <div v-show="!allUsers">
-    {{ forms.checkboxGroupField({
-        label: 'User Group(s)'|t('app'),
-        id: 'userGroups',
-        name: 'userGroups',
-        values: datatable.getUserGroups(),
-        options:userGroups,
-        required: true,
-        errors: datatable.getErrors('userGroups'),
-    }) }}
+        {{ forms.checkboxGroupField({
+            label: 'User Group(s)'|t('app'),
+            id: 'userGroups',
+            name: 'userGroups',
+            values: datatable.getUserGroups(),
+            options:userGroups,
+            required: true,
+            errors: datatable.getErrors('userGroups'),
+        }) }}
     </div>
 
 </div>

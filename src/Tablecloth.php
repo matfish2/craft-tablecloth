@@ -35,6 +35,7 @@ class Tablecloth extends Plugin
 {
     public bool $hasCpSection = true;
     public bool $hasCpSettings = true;
+    public string $schemaVersion = '1.0.1';
 
     /**
      * @var array

@@ -41,6 +41,7 @@ class DataTableQuery extends ElementQuery
             'tablecloth.allUsers',
             'tablecloth.userGroups',
             'tablecloth.variantsStrategy',
+            'tablecloth.structureStrategy',
             'tablecloth.serverTable',
             'tablecloth.columns',
             'tablecloth.filterPerColumn',

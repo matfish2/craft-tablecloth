@@ -121,7 +121,21 @@ window.tablecloth = function (handle) {
         visibleColumns: window[`CraftTablecloth_${handle}`].columns.filter(column => !column.hidden).map(column => column.handle),
         loading: false,
         open: false,
+        structureIndentation(level) {
+            // console.log(this.tableDefinition)
+            return {paddingLeft:(level-1) * 24 + 'px'}
+            // if (this.)
+        },
         // Computed Properties
+        get structureStrategy() {
+          return 'indent' // TODO
+        },
+        get isStructure() {
+          return true   // TODO
+        },
+        get sortingApplied() {
+            return !!this.currentSort.column
+        },
         get recordsCount() {
             return this._recordsCount()
         },

@@ -20,6 +20,8 @@ class Install extends Migration
                 'allUsers'=>$this->boolean()->defaultValue(true),
                 'userGroups'=>$this->string()->null(),
                 'variantsStrategy'=>$this->enum('variantsStrategy',['join','nest'])->null(),
+                'structureStrategy'=>$this->enum('structureStrategy',['nest_data','nest_visual','no_nesting'])->null(),
+                'structureNestingLevel'=>$this->tinyInteger()->unsigned()->null(),
                 'externalApiDetails' => $this->text()->null(),
                 'serverTable' => $this->boolean()->defaultValue(false),
                 'columns' => $this->text()->null(),

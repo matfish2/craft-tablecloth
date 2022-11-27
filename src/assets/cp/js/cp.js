@@ -1,4 +1,4 @@
-import Vue from 'vue/dist/vue.min'
+import Vue from 'vue/dist/vue'
 
 new Vue({
     el: "#tablecloth-app",
@@ -36,6 +36,12 @@ new Vue({
             });
 
             this.$watch('source', () => {
+                this.$nextTick(() => {
+                    this.typeId = ''
+                })
+            });
+
+            this.$watch('sectionId', () => {
                 this.$nextTick(() => {
                     this.typeId = ''
                 })
@@ -146,10 +152,17 @@ new Vue({
         selectedType() {
             return this.typeId ? this.types.find(type => parseInt(type.value) === parseInt(this.typeId)) : {}
         },
+        selectedSection() {
+            return this.sectionId ? this.sections.find(type => parseInt(type.value) === parseInt(this.sectionId)) : {}
+        },
         columnHandles() {
-            return Object.keys(this.fieldsMap)
+            return this.fieldsMap ? Object.keys(this.fieldsMap) : []
         },
         queryableColumnHandles() {
+            if (!Tablecloth.matrixFields) {
+                return []
+            }
+
             const matrixHandles = Tablecloth.matrixFields.map(f => f.value)
             const tableHandles = Tablecloth.tableFields.map(f => f.value)
 

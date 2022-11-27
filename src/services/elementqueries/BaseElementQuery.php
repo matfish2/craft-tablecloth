@@ -6,6 +6,7 @@ namespace matfish\Tablecloth\services\elementqueries;
 use Craft;
 use craft\db\Table;
 use matfish\Tablecloth\enums\DataTypes;
+use matfish\Tablecloth\exceptions\TableclothException;
 use matfish\Tablecloth\models\Column\Column;
 use matfish\Tablecloth\models\Column\ColumnInterface;
 use matfish\Tablecloth\services\dataset\PrefilterSqlGenerator;
@@ -23,6 +24,7 @@ abstract class BaseElementQuery extends BaseSourceQuery
 
     /**
      * @throws \yii\db\Exception|\JsonException
+     * @throws TableclothException
      */
     public function getInitialData(): Normalizer
     {
@@ -30,8 +32,12 @@ abstract class BaseElementQuery extends BaseSourceQuery
 
         if ($this->dataTable->initialSortColumn) {
             $initialOrderColumn = $this->dataTable->getColumnByHandle($this->dataTable->initialSortColumn)->getDbColumn(false);
-            $initialOrderAsc = $this->dataTable->initialSortColumn ? $this->dataTable->initialSortAsc : false;
+            $initialOrderAsc =$this->dataTable->initialSortColumn ? $this->dataTable->initialSortAsc : false;
             $this->builder->orderBy([$initialOrderColumn => $initialOrderAsc ? SORT_ASC : SORT_DESC]);
+        } elseif ($this->dataTable->isStructure()) {
+            $this->builder->orderBy([
+                '[[structureelements.lft]]' => SORT_ASC
+            ]);
         } else {
             $this->builder->orderBy([
                 $this->getDefaultSort() => SORT_DESC,
@@ -95,7 +101,7 @@ abstract class BaseElementQuery extends BaseSourceQuery
             $this->builder->orderBy([$column->getDbColumn(Column::CONTEXT_SORT) => $sortDirection === 'ASC' ? SORT_ASC : SORT_DESC]);
 
         } else {
-            $this->builder->orderBy([$this->getDefaultSort() => SORT_DESC,"[[{$this->getTableName()}.id]]"=>SORT_ASC]);
+            $this->builder->orderBy([$this->getDefaultSort() => SORT_DESC, "[[{$this->getTableName()}.id]]" => SORT_ASC]);
         }
 
         $data = $this->eagerLoadRelations();
@@ -107,7 +113,8 @@ abstract class BaseElementQuery extends BaseSourceQuery
      * @param $handle
      * @return mixed
      */
-    protected function transformHandle($handle) {
+    protected function transformHandle($handle)
+    {
         return $handle;
     }
 
@@ -133,6 +140,8 @@ abstract class BaseElementQuery extends BaseSourceQuery
 
     /**
      * @return array
+     * @throws TableclothException
+     * @throws \JsonException
      */
     public function getColumns(): array
     {
@@ -144,10 +153,16 @@ abstract class BaseElementQuery extends BaseSourceQuery
         }
 
         $tableName = $this->getTableName();
+        $baseCols = ["{$tableName}.id"];
 
-        return array_merge(["{$tableName}.id"], $columns->dbColumns());
+        if ($this->dataTable->isStructure()) {
+            $baseCols = array_merge($baseCols, [
+                "[[structureelements.level]] tcLevel",
+                "[[structureelements_parents.elementId]] [[parentElementId]]"
+            ]);
+        }
+        return array_merge($baseCols, $columns->dbColumns());
     }
-
 
     abstract protected function getBuilder(): TableclothQuery;
 
@@ -265,6 +280,10 @@ abstract class BaseElementQuery extends BaseSourceQuery
         $this->builder->andWhere(implode(' OR ', $sql));
     }
 
+    /**
+     * @throws TableclothException
+     * @throws \JsonException
+     */
     private function applyJoins(): void
     {
         $usedColumns = $this->dataTable
