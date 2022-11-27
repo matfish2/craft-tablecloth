@@ -52,7 +52,7 @@ class Normalizer
             $normalizers[$column->getFrontEndHandle()] = $this->getNormalizer($column);
         });
 
-        $instance =  new static($this->datatable, array_map(static function ($row) use ($normalizers) {
+        $instance = new static($this->datatable, array_map(static function ($row) use ($normalizers) {
             foreach ($normalizers as $column => $normalizer) {
                 try {
                     $row[$column] = is_null($row[$column]) ?
@@ -67,9 +67,10 @@ class Normalizer
             return $row;
         }, $this->data));
 
-//        if ($this->datatable->isStructure() && $this->datatable->structureStrategy==='nest') {
+
+        if ($this->datatable->isStructure() && $this->datatable->structureStrategy === 'nest') {
             $instance->toNestedStructure();
-//        }
+        }
 
         return $instance;
     }
@@ -105,7 +106,8 @@ class Normalizer
         }
     }
 
-    public function toNestedStructure() : void {
+    public function toNestedStructure(): void
+    {
         $this->data = (new StructureDataNester($this->data))->nest();
     }
 

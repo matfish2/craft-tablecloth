@@ -158,8 +158,11 @@ abstract class BaseElementQuery extends BaseSourceQuery
         if ($this->dataTable->isStructure()) {
             $baseCols = array_merge($baseCols, [
                 "[[structureelements.level]] tcLevel",
-                "[[structureelements_parents.elementId]] [[parentElementId]]"
             ]);
+
+            if ($this->dataTable->structureStrategy==='nest') {
+               $baseCols[] = "[[structureelements_parents.elementId]] [[parentElementId]]";
+            }
         }
         return array_merge($baseCols, $columns->dbColumns());
     }

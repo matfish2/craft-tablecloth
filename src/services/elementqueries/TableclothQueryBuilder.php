@@ -77,9 +77,9 @@ abstract class TableclothQueryBuilder
             $query->leftJoin($this->aliasedTable('structureelements'), "[[structureelements.elementId]] = [[elements.id]] AND [[structureelements.structureId]]={$structureId}");
             $subQuery->leftJoin($this->aliasedTable('structureelements'), "[[structureelements.elementId]] = [[elements.id]] AND [[structureelements.structureId]]={$structureId}");
 
-//            if ($this->dataTable->structureStrategy === 'nest_data') {
+            if ($this->dataTable->structureStrategy === 'nest') {
                 $query->leftJoin($this->aliasedTable('structureelements_parents'), "[[structureelements.lft]] BETWEEN [[structureelements_parents.lft]] AND [[structureelements_parents.rgt]] AND [[structureelements_parents.elementId]] IS NOT NULL AND [[structureelements_parents.elementId]]!=[[structureelements.elementId]] AND [[structureelements_parents.structureId]]={$structureId} AND [[structureelements.level]]=[[structureelements_parents.level]]+1");
-//            }
+            }
 
         }
 

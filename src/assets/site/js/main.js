@@ -128,10 +128,10 @@ window.tablecloth = function (handle) {
         },
         // Computed Properties
         get structureStrategy() {
-          return 'indent' // TODO
+          return this.tableDefinition.structureStrategy
         },
         get isStructure() {
-          return true   // TODO
+          return this.tableDefinition.isStructure
         },
         get sortingApplied() {
             return !!this.currentSort.column

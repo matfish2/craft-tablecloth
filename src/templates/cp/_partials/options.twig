@@ -17,7 +17,7 @@
 {{ forms.select({
     value: datatable.getParam('initialSortColumn'),
     name:'initialSortColumn',
-    options: normalFields,
+    options: ['None'] | merge(normalFields),
     required: true
 }) }}
 

@@ -14,6 +14,7 @@ use craft\elements\User;
 use craft\fields\Matrix;
 use craft\fields\Table;
 use craft\helpers\UrlHelper;
+use craft\records\CategoryGroup;
 use craft\records\Section;
 use craft\web\View;
 use matfish\Tablecloth\actions\DeleteAction;
@@ -65,7 +66,10 @@ class DataTable extends Element
     // Product
     public ?string $variantsStrategy = 'nest';
 
-    public ?string $structureStrategy = 'nest_data';
+    // Structure
+    public ?bool $isStructure = false;
+    public ?int $tcStructureId = null;
+    public ?string $structureStrategy = 'flat';
     public ?int $structureNestingLevel = null;
 
     public $columns;
@@ -120,6 +124,7 @@ class DataTable extends Element
             }],
             [['userGroups'], 'validateUserGroups'],
             [['serverTable', 'filterPerColumn', 'overrideGeneralSettings', 'initialSortAsc'], 'boolean'],
+            [['serverTable'], 'validateServerTable'],
             [['debounce', 'thumbnailWidth'], 'integer'],
             [['initialSortColumn', 'externalApiDetails', 'variantsStrategy', 'structureStrategy'], 'string'],
             ['datasetPrefilter', 'validatePrefilter']
@@ -131,15 +136,15 @@ class DataTable extends Element
      */
     public function isStructure(): bool
     {
-        return $this->sectionId && Section::findOne($this->sectionId)->type === 'structure';
+        return (bool)$this->isStructure;
     }
 
     /**
      * @return ?int
      */
-    public function structureId() : ?int
+    public function structureId(): ?int
     {
-        return Section::findOne($this->sectionId)->structureId;
+        return $this->tcStructureId;
     }
 
     /**
@@ -328,7 +333,9 @@ class DataTable extends Element
             'options' => $this->getTableOptions(),
 //            'lists' => $this->getTableLists(),
             'serverTable' => $this->serverTable,
-            'siteId' => Craft::$app->getSites()->currentSite->id
+            'siteId' => Craft::$app->getSites()->currentSite->id,
+            'isStructure' => $this->isStructure(),
+            'structureStrategy' => $this->structureStrategy
         ];
     }
 
@@ -676,7 +683,7 @@ class DataTable extends Element
         $options = [
             'enableChildRows' => $this->enableChildRows,
             'initialSortColumn' => $this->initialSortColumn,
-            'initialSortAsc' => $this->initialSortAsc
+            'initialSortAsc' => $this->initialSortAsc,
         ];
 
         return array_merge($overrideable, $options);
@@ -734,6 +741,13 @@ class DataTable extends Element
             foreach ($errors as $error) {
                 $this->addError('datasetPrefilter', $error);
             }
+        }
+    }
+
+    public function validateServerTable()
+    {
+        if ($this->serverTable && $this->isStructure() && $this->structureStrategy === 'nest') {
+            $this->addError('serverTable', 'Server table is currently not supported on nested structures');
         }
     }
 
@@ -819,6 +833,8 @@ class DataTable extends Element
      */
     private function _getInsertData(): array
     {
+        $isStructure = $this->source === Category::class || ($this->source === Entry::class && Section::findOne($this->sectionId)->type === 'structure');
+
         return [
             'id' => $this->id,
             'name' => $this->name,
@@ -830,8 +846,10 @@ class DataTable extends Element
             'groupId' => $this->groupId,
             'userGroups' => json_encode_if($this->userGroups),
             'variantsStrategy' => $this->variantsStrategy,
+            'isStructure' => $isStructure,
+            'tcStructureId' => $isStructure ? $this->getStructureId() : null,
             'structureStrategy' => $this->structureStrategy,
-            'structureNestingLevel' => $this->structureNestingLevel
+            'structureNestingLevel' => $this->structureNestingLevel,
         ];
     }
 
@@ -857,7 +875,7 @@ class DataTable extends Element
             'childRowMatrixFields' => json_encode_if($this->childRowMatrixFields),
             'childRowTableFields' => json_encode_if($this->childRowTableFields),
             'initialPerPage' => $this->initialPerPage,
-            'initialSortColumn' => $this->initialSortColumn,
+            'initialSortColumn' => $this->initialSortColumn !== '0' ? $this->initialSortColumn : null,
             'initialSortAsc' => $this->initialSortAsc,
             'perPageValues' => $this->perPageValues,
             'debounce' => $this->debounce,
@@ -922,5 +940,18 @@ class DataTable extends Element
         }
 
         return Column::class;
+    }
+
+    private function getStructureId(): ?int
+    {
+        if ($this->source === Entry::class) {
+            return Section::findOne($this->sectionId)->structureId;
+        }
+
+        if ($this->source === Category::class) {
+            return CategoryGroup::findOne($this->groupId)->structureId;
+        }
+
+        return null;
     }
 }
