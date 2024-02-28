@@ -1,5 +1,9 @@
 # Release Notes for Tablecloth
 
+## 2.2.0 - 2024-02-28
+### Fixed
+- Reset template mode to TEMPLATE_MODE_SITE after render
+
 ## 2.1.0 - 2022-11-27
 ### Added
 - Add Nested Structure option

@@ -41,12 +41,15 @@ class TableclothTwigExtension extends TwigExtension
 
         $bundle = TableclothAssetBundle::register($view);
 
-        return $view->renderTemplate($tablePath['path'], [
+        $res = $view->renderTemplate($tablePath['path'], [
             'preset' => $preset,
             'datatable' => $dt,
             'svgPath' => $bundle->baseUrl . '/site/svg/'
         ], $tablePath['mode']);
 
+        \Craft::$app->view->setTemplateMode(View::TEMPLATE_MODE_SITE);
+
+        return $res;
     }
 
     private function getTablePath($handle, $preset)
