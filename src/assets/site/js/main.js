@@ -18,7 +18,7 @@ window.tablecloth = function (handle) {
         async init() {
             this.loading = true
             this.dispatch('init.loading');
-            const {data} = await axios.get(`/?action=tablecloth/site-data/get-initial-data&handle=${handle}&siteId=${siteId}`);
+            const {data} = await axios.get(window.CraftTablecloth.siteUrl + `?action=tablecloth/site-data/get-initial-data&handle=${handle}&siteId=${siteId}`);
             this.dispatch('init.loaded', data);
 
             this.data = this._transformDataset(data)

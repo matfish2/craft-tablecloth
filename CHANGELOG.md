@@ -1,5 +1,9 @@
 # Release Notes for Tablecloth
 
+## 2.2.2 - 2024-02-28
+### Fixed
+- Use absolute URLs
+
 ## 2.2.1 - 2024-02-28
 ### Fixed
 - Use prefixed tailwind theme to avoid impacting consumer's styling

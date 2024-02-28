@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "js-build": "npx mix --production",
+    "js-watch": "npx mix --watch",
     "tailwind-watch": "npx tailwindcss -i ./src/assets/site/css/styles.scss -o ./src/assets/compiled/craft-tablecloth.min.css --watch",
     "tailwind-build": "npx tailwindcss -i ./src/assets/site/css/styles.scss -o ./src/assets/compiled/craft-tablecloth.min.css --minify"
   },
