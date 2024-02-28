@@ -1,5 +1,5 @@
 <div class="ml-1">
-    <select x-model="perPage" class="h-full px-1 rounded-lg focus:outline-none">
+    <select x-model="perPage" class="ctc-h-full ctc-px-1 ctc-rounded-lg focus:ctc-outline-none">
         <template x-for="value in perPageValues">
             <option :value="value" :selected="value===perPage" x-text="value"></option>
         </template>

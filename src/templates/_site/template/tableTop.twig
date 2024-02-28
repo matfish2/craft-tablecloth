@@ -1,6 +1,6 @@
-<div class="mb-4 flex justify-between items-center">
+<div class="ctc-mb-4 ctc-flex ctc-justify-between ctc-items-center">
     {% block tableTopLeft %}
-        <div class="flex-1 pr-4">
+        <div class="ctc-flex-1 ctc-pr-4">
             {% block filter %}
                 {% if 'filters' in options.components %}
                     {% include datatable.componentPath('search') %}
@@ -11,7 +11,7 @@
 
     {% block tableTopRight %}
         <div>
-            <div class="shadow rounded-lg flex">
+            <div class="ctc-shadow ctc-rounded-lg ctc-flex">
                 {% block columnsDisplay %}
                     {% if 'columnsDisplay' in options.components %}
                         {% include datatable.componentPath('columns') %}

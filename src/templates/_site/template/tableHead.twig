@@ -1,29 +1,29 @@
 <thead>
 {% block headings %}
-    <tr class="text-left">
+    <tr class="ctc-text-left">
         {% if options.enableChildRows %}
-            <th class="py-2 px-3 sticky top-0 border-b border-gray-200 bg-gray-100">
+            <th class="ctc-py-2 ctc-px-3 ctc-sticky ctc-top-0 ctc-border-b ctc-border-gray-200 ctc-bg-gray-100">
             </th>
         {% endif %}
         {% if 'selectableRows' in options.components %}
-            <th class="py-2 px-3 sticky top-0 border-b border-gray-200 bg-gray-100">
+            <th class="ctc-py-2 ctc-px-3 ctc-sticky ctc-top-0 ctc-border-b ctc-border-gray-200 ctc-bg-gray-100">
                 <label
-                        class="text-teal-500 inline-flex justify-between items-center hover:bg-gray-200 px-2 py-2 rounded-lg cursor-pointer">
-                    <input type="checkbox" class="form-checkbox focus:outline-none focus:shadow-outline"
+                        class="ctc-text-teal-500 ctc-inline-flex ctc-justify-between ctc-items-center ctc-hover:bg-gray-200 ctc-px-2 ctc-py-2 ctc-rounded-lg ctc-cursor-pointer">
+                    <input type="checkbox" class="form-checkbox focus:ctc-outline-none focus:ctc-shadow-outline"
                            @click="selectAllCheckbox($event);">
                 </label>
             </th>
         {% endif %}
         <template x-for="column in renderableColumns" :key="column.handle">
-            <th class="bg-gray-100 sticky top-0 border-b border-gray-200 px-6 py-2 text-gray-600 font-bold tracking-wider uppercase text-xs"
+            <th class="ctc-bg-gray-100 ctc-sticky ctc-top-0 ctc-border-b ctc-border-gray-200 ctc-px-6 ctc-py-2 ctc-text-gray-600 ctc-font-bold ctc-tracking-wider ctc-uppercase ctc-text-xs"
                 :x-ref="column.handle"
                 :class="{ [column.handle]: true }"
                 @click="sortByColumn(column.handle)"
             >
-                <div class="flex justify-between">
+                <div class="ctc-flex ctc-justify-between">
                     <span x-text="column.heading"></span>
                     <template x-if="column.sortable">
-                        <p class="pointer-cursor">
+                        <p class="ctc-pointer-cursor">
                             <img :src="`{{ svgPath }}/sort${sortSuffix(column.handle)}.svg`" width="20" alt="Sortable">
                         </p>
                     </template>

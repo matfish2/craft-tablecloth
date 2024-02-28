@@ -1,17 +1,17 @@
 {% set options = datatable.tableOptions %}
 {% block tablewrap %}
-<div class="container mx-auto py-6 px-4 tablecloth-wrapper tablecloth__{{ datatable.handle }}"
+<div class="ctc-container ctc-mx-auto ctc-py-6 ctc-px-4 tablecloth-wrapper tablecloth__{{ datatable.handle }}"
      x-data="tablecloth('{{ datatable.handle }}')"
      x-cloak>
     <template x-if="!loading">
         {% block table %}
         <div>
             {% include datatable.componentPath('tableTop') %}
-            <div class="overflow-x-auto bg-white rounded-lg shadow overflow-y-auto overflow-x-hidden relative"
+            <div class="ctc-overflow-x-auto ctc-bg-white ctc-rounded-lg ctc-shadow ctc-overflow-y-auto ctc-overflow-x-hidden ctc-relative"
                  style="height: {{ datatable.getTableOption('height') }}px;">
                 {% include datatable.componentPath('table') %}
             </div>
-            <div class="flex justify-between items-center flex-col-reverse md:flex-row">
+            <div class="ctc-flex ctc-justify-between ctc-items-center ctc-flex-col-reverse md:ctc-flex-row">
                 {% block count %}
                     <div class=>
                         {% if 'entriesCount' in options.components %}
@@ -23,7 +23,7 @@
 
                 {% endblock %}
                 {% block pagination %}
-                    <div class="flex flex-col-reverse text-center md:flex-row md:items-center">
+                    <div class="ctc-flex ctc-flex-col-reverse ctc-text-center md:ctc-flex-row md:ctc-items-center">
                         {% if 'pagesCount' in options.components %}
                             {% include datatable.componentPath('pagesCount') %}
                         {% endif %}

@@ -1,7 +1,7 @@
 {% block pagination %}
-<div class="py-4 ma">
-    <div class="flex items-center">
-        <button type="button" class="flex items-center px-3 border border-gray-400 py-1 text-gray-500 bg-white rounded-l-md hover:bg-blue-400 hover:text-white"
+<div class="ctc-py-4 ma">
+    <div class="ctc-flex ctc-items-center">
+        <button type="button" class="ctc-flex ctc-items-center ctc-px-3 ctc-border ctc-border-gray-400 ctc-py-1 ctc-text-gray-500 ctc-bg-white ctc-rounded-l-md hover:ctc-bg-blue-400 hover:ctc-text-white"
         @click="prevPage"
                 :disabled="currentPage===1"
         >
@@ -10,14 +10,14 @@
 
         <template x-for="page in renderablePages" :key="page">
             <button type="button"
-                    class="ma-0 px-3 py-1 text-gray-700 hover:bg-blue-400 hover:text-white border-t border-r border-b border-gray-400"
-                    :class="currentPage===page ? 'bg-blue-400 text-white':'bg-white'"
+                    class="ctc-ma-0 ctc-px-3 ctc-py-1 ctc-text-gray-700 hover:ctc-bg-blue-400 hover:ctc-text-white ctc-border-t ctc-border-r ctc-border-b ctc-border-gray-400"
+                    :class="currentPage===page ? 'ctc-bg-blue-400 ctc-text-white':'ctc-bg-white'"
                     @click="setPage(page)"
                     x-text="page">
             </button>
         </template>
         <button
-                class="px-3 py-1 text-gray-500 bg-white border rounded-r-md border-gray-400 hover:bg-blue-400 hover:text-white"
+                class="ctc-px-3 ctc-py-1 ctc-text-gray-500 ctc-bg-white ctc-border ctc-rounded-r-md ctc-border-gray-400 hover:ctc-bg-blue-400 hover:ctc-text-white"
                 @click="nextPage"
                 :disabled="currentPage===pages"
         >

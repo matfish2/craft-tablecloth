@@ -1,5 +1,9 @@
 # Release Notes for Tablecloth
 
+## 2.2.1 - 2024-02-28
+### Fixed
+- Use prefixed tailwind theme to avoid impacting consumer's styling
+
 ## 2.2.0 - 2024-02-28
 ### Fixed
 - Reset template mode to TEMPLATE_MODE_SITE after render
