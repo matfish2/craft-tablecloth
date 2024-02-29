@@ -1,5 +1,10 @@
 # Release Notes for Tablecloth
 
+## 2.2.3 - 2024-02-29
+### Fixed
+- Use `cpUrl()` as base URL
+- Scope CSS
+
 ## 2.2.2 - 2024-02-28
 ### Fixed
 - Use absolute URLs
