@@ -6,9 +6,9 @@
             </th>
         {% endif %}
         {% if 'selectableRows' in options.components %}
-            <th class="ctc-py-2 ctc-px-3 ctc-sticky ctc-top-0 ctc-border-b ctc-border-gray-200 ctc-bg-gray-100">
+            <th class="ctc-px-3 ctc-sticky ctc-top-0 ctc-border-b ctc-border-gray-200 ctc-bg-gray-100">
                 <label
-                        class="ctc-text-teal-500 ctc-inline-flex ctc-justify-between ctc-items-center ctc-hover:bg-gray-200 ctc-px-2 ctc-py-2 ctc-rounded-lg ctc-cursor-pointer">
+                        class="ctc-text-teal-500 ctc-inline-flex ctc-justify-between ctc-items-center ctc-hover:bg-gray-200 ctc-px-2 ctc-rounded-lg ctc-cursor-pointer">
                     <input type="checkbox" class="form-checkbox focus:ctc-outline-none focus:ctc-shadow-outline"
                            @click="selectAllCheckbox($event);">
                 </label>
@@ -23,7 +23,7 @@
                 <div class="ctc-flex ctc-justify-between">
                     <span x-text="column.heading"></span>
                     <template x-if="column.sortable">
-                        <p class="ctc-pointer-cursor">
+                        <p class="ctc-pointer-cursor ctc-py-0 ctc-my-0">
                             <img :src="`{{ svgPath }}/sort${sortSuffix(column.handle)}.svg`" width="20" alt="Sortable">
                         </p>
                     </template>

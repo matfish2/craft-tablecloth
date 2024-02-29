@@ -43,9 +43,9 @@
 
 <script>
     window.CraftTablecloth = {
-        siteUrl: '{{ siteUrl() }}'
+        cpUrl: '{{ cpUrl() }}'
     };
-    
+
     window.CraftTablecloth_{{ datatable.handle }} = {{ datatable.jsData | json_encode | raw }};
     window.Tablecloth_{{ datatable.handle }} = {
         on(event, callback) {

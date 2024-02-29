@@ -20,7 +20,7 @@ export default {
             this.getData(true);
         })
 
-        const {data} = await axios.post(window.CraftTablecloth.siteUrl + `?action=tablecloth/site-data/get-count&handle=${this.handle}&siteId=${this.tableDefinition.siteId}`);
+        const {data} = await axios.post(window.CraftTablecloth.cpUrl + `?action=tablecloth/site-data/get-count&handle=${this.handle}&siteId=${this.tableDefinition.siteId}`);
         this.totalCount = data
 
     },
@@ -73,7 +73,7 @@ export default {
             params += '&' + this._serialize(this._customFiltersMap(), 'filters')
         }
 
-        let dataRes = await axios.post(window.CraftTablecloth.siteUrl + `?action=tablecloth/site-data/get-data&${params}`);
+        let dataRes = await axios.post(window.CraftTablecloth.cpUrl + `?action=tablecloth/site-data/get-data&${params}`);
         this.data = this._transformDataset(dataRes.data)
         this.dispatch('loaded.data', this.data)
 
@@ -87,7 +87,7 @@ export default {
             countParams += '&' + this._serialize(this._customFiltersMap(), 'filters')
         }
 
-        let countRes = await axios.post(window.CraftTablecloth.siteUrl + `?action=tablecloth/site-data/get-count&${countParams}`);
+        let countRes = await axios.post(window.CraftTablecloth.cpUrl + `?action=tablecloth/site-data/get-count&${countParams}`);
         this.totalCount = countRes.data
         this.dispatch('loaded.count', this.totalCount)
 

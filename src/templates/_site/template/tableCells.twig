@@ -1,5 +1,5 @@
 <template x-for="(column,i) in renderableColumns" :key="i">
-    <td :style="i===0 && isStructure && structureStrategy==='indent' && !sortingApplied ? structureIndentation(row.tcLevel) : {}" class="ctc-border-dashed ctc-border-t ctc-border-gray-200">
+    <td :style="i===0 && isStructure && structureStrategy==='indent' && !sortingApplied ? structureIndentation(row.tcLevel) : {}" class="ctc-border-dashed ctc-border-b ctc-border-t ctc-border-gray-200">
         {% include datatable.getComponentPath('tableCell') %}
     </td>
 </template>
